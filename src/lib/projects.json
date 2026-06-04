@@ -11,7 +11,35 @@
       "IMG_1601.jpeg",
       "Katatounia metal band .jpeg"
     ],
-    "folder": "Lboulevard festival "
+    "folder": "Lboulevard festival ",
+    "slug": "lboulevard-festival",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/lboulevard-festival/001.jpg",
+        "w": 4903,
+        "h": 3922
+      },
+      {
+        "file": "/photos/projects/lboulevard-festival/002.jpg",
+        "w": 6229,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/lboulevard-festival/003.jpg",
+        "w": 5266,
+        "h": 4213
+      },
+      {
+        "file": "/photos/projects/lboulevard-festival/004.jpg",
+        "w": 3887,
+        "h": 2915
+      },
+      {
+        "file": "/photos/projects/lboulevard-festival/005.jpg",
+        "w": 4672,
+        "h": 5840
+      }
+    ]
   },
   {
     "cat": "music",
@@ -35,7 +63,85 @@
       "IMG_3367.jpeg",
       "IMG_3596.jpeg"
     ],
-    "folder": "Moga festival "
+    "folder": "Moga festival ",
+    "slug": "moga-festival",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/moga-festival/001.jpg",
+        "w": 5349,
+        "h": 3879
+      },
+      {
+        "file": "/photos/projects/moga-festival/002.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/moga-festival/003.jpg",
+        "w": 4638,
+        "h": 5416
+      },
+      {
+        "file": "/photos/projects/moga-festival/004.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/moga-festival/005.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/moga-festival/006.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/moga-festival/007.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/moga-festival/008.jpg",
+        "w": 3944,
+        "h": 4930
+      },
+      {
+        "file": "/photos/projects/moga-festival/009.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/moga-festival/010.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/moga-festival/011.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/moga-festival/012.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/moga-festival/013.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/moga-festival/014.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/moga-festival/015.jpg",
+        "w": 7008,
+        "h": 4672
+      }
+    ]
   },
   {
     "cat": "music",
@@ -50,7 +156,40 @@
       "IMG_3055.jpeg",
       "Untitled-1.jpeg"
     ],
-    "folder": "OVUL FESTIVAL "
+    "folder": "OVUL FESTIVAL ",
+    "slug": "ovul-festival",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/ovul-festival/001.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/ovul-festival/002.jpg",
+        "w": 5594,
+        "h": 3729
+      },
+      {
+        "file": "/photos/projects/ovul-festival/003.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ovul-festival/004.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ovul-festival/005.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ovul-festival/006.jpg",
+        "w": 4193,
+        "h": 6289
+      }
+    ]
   },
   {
     "cat": "music",
@@ -74,7 +213,85 @@
       "IMG_5143.jpeg",
       "IMG_5148.jpeg"
     ],
-    "folder": "TALGUITART FESTIVAL "
+    "folder": "TALGUITART FESTIVAL ",
+    "slug": "talguitart-festival",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/talguitart-festival/001.jpg",
+        "w": 5773,
+        "h": 3814
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/002.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/003.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/004.jpg",
+        "w": 3072,
+        "h": 3788
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/005.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/006.jpg",
+        "w": 3772,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/007.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/008.jpg",
+        "w": 4148,
+        "h": 2765
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/009.jpg",
+        "w": 2733,
+        "h": 2225
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/010.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/011.jpg",
+        "w": 2897,
+        "h": 1931
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/012.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/013.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/014.jpg",
+        "w": 4020,
+        "h": 1802
+      },
+      {
+        "file": "/photos/projects/talguitart-festival/015.jpg",
+        "w": 3072,
+        "h": 4608
+      }
+    ]
   },
   {
     "cat": "music",
@@ -94,7 +311,65 @@
       "IMG_8199.jpeg",
       "IMG_8202.jpeg"
     ],
-    "folder": "orchestre_philharmonique_maroc"
+    "folder": "orchestre_philharmonique_maroc",
+    "slug": "orchestre_philharmonique_maroc",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/001.jpg",
+        "w": 2530,
+        "h": 3795
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/002.jpg",
+        "w": 4187,
+        "h": 2791
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/003.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/004.jpg",
+        "w": 4157,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/005.jpg",
+        "w": 4672,
+        "h": 5517
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/006.jpg",
+        "w": 2888,
+        "h": 3218
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/007.jpg",
+        "w": 1851,
+        "h": 2777
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/008.jpg",
+        "w": 3072,
+        "h": 3395
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/009.jpg",
+        "w": 1442,
+        "h": 1887
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/010.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/orchestre_philharmonique_maroc/011.jpg",
+        "w": 7008,
+        "h": 4672
+      }
+    ]
   },
   {
     "cat": "hospitality",
@@ -155,7 +430,270 @@
       "IMG_6035.jpeg",
       "IMG_6036.jpeg"
     ],
-    "folder": "48 collagen "
+    "folder": "48 collagen ",
+    "slug": "48-collagen",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/48-collagen/001.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/002.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/003.jpg",
+        "w": 2425,
+        "h": 3605
+      },
+      {
+        "file": "/photos/projects/48-collagen/004.jpg",
+        "w": 3976,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/005.jpg",
+        "w": 4672,
+        "h": 5551
+      },
+      {
+        "file": "/photos/projects/48-collagen/006.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/48-collagen/007.jpg",
+        "w": 4672,
+        "h": 5780
+      },
+      {
+        "file": "/photos/projects/48-collagen/008.jpg",
+        "w": 2831,
+        "h": 4247
+      },
+      {
+        "file": "/photos/projects/48-collagen/009.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/48-collagen/010.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/011.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/012.jpg",
+        "w": 4672,
+        "h": 5372
+      },
+      {
+        "file": "/photos/projects/48-collagen/013.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/014.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/015.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/016.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/017.jpg",
+        "w": 3889,
+        "h": 2663
+      },
+      {
+        "file": "/photos/projects/48-collagen/018.jpg",
+        "w": 3063,
+        "h": 3707
+      },
+      {
+        "file": "/photos/projects/48-collagen/019.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/020.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/48-collagen/021.jpg",
+        "w": 3287,
+        "h": 4049
+      },
+      {
+        "file": "/photos/projects/48-collagen/022.jpg",
+        "w": 3287,
+        "h": 4049
+      },
+      {
+        "file": "/photos/projects/48-collagen/023.jpg",
+        "w": 5919,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/024.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/025.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/026.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/027.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/028.jpg",
+        "w": 3072,
+        "h": 3816
+      },
+      {
+        "file": "/photos/projects/48-collagen/029.jpg",
+        "w": 2519,
+        "h": 3778
+      },
+      {
+        "file": "/photos/projects/48-collagen/030.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/031.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/48-collagen/032.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/48-collagen/033.jpg",
+        "w": 4672,
+        "h": 5601
+      },
+      {
+        "file": "/photos/projects/48-collagen/034.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/035.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/036.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/037.jpg",
+        "w": 3838,
+        "h": 5759
+      },
+      {
+        "file": "/photos/projects/48-collagen/038.jpg",
+        "w": 5796,
+        "h": 3864
+      },
+      {
+        "file": "/photos/projects/48-collagen/039.jpg",
+        "w": 3072,
+        "h": 4121
+      },
+      {
+        "file": "/photos/projects/48-collagen/040.jpg",
+        "w": 3072,
+        "h": 4127
+      },
+      {
+        "file": "/photos/projects/48-collagen/041.jpg",
+        "w": 5734,
+        "h": 3823
+      },
+      {
+        "file": "/photos/projects/48-collagen/042.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/043.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/044.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/045.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/046.jpg",
+        "w": 3107,
+        "h": 2515
+      },
+      {
+        "file": "/photos/projects/48-collagen/047.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/48-collagen/048.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/049.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/050.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/48-collagen/051.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/48-collagen/052.jpg",
+        "w": 3072,
+        "h": 4608
+      }
+    ]
   },
   {
     "cat": "hospitality",
@@ -166,7 +704,20 @@
       "IMG_5767.jpeg",
       "IMG_5771.jpeg"
     ],
-    "folder": "Amouag taghazout "
+    "folder": "Amouag taghazout ",
+    "slug": "amouag-taghazout",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/amouag-taghazout/001.jpg",
+        "w": 1529,
+        "h": 2292
+      },
+      {
+        "file": "/photos/projects/amouag-taghazout/002.jpg",
+        "w": 2047,
+        "h": 2048
+      }
+    ]
   },
   {
     "cat": "hospitality",
@@ -185,7 +736,60 @@
       "IMG_5886.jpeg",
       "IMG_6016.jpeg"
     ],
-    "folder": "Coffee shop NOUR "
+    "folder": "Coffee shop NOUR ",
+    "slug": "coffee-shop-nour",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/coffee-shop-nour/001.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/002.jpg",
+        "w": 1716,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/003.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/004.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/005.jpg",
+        "w": 2048,
+        "h": 1197
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/006.jpg",
+        "w": 1668,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/007.jpg",
+        "w": 1365,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/008.jpg",
+        "w": 2048,
+        "h": 1287
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/009.jpg",
+        "w": 1539,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/coffee-shop-nour/010.jpg",
+        "w": 3072,
+        "h": 4608
+      }
+    ]
   },
   {
     "cat": "hospitality",
@@ -205,7 +809,65 @@
       "IMG_6060.jpeg",
       "IMG_6061.jpeg"
     ],
-    "folder": "Tamraght hostel "
+    "folder": "Tamraght hostel ",
+    "slug": "tamraght-hostel",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/tamraght-hostel/001.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/002.jpg",
+        "w": 1451,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/003.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/004.jpg",
+        "w": 2048,
+        "h": 1451
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/005.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/006.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/007.jpg",
+        "w": 2048,
+        "h": 1451
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/008.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/009.jpg",
+        "w": 1463,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/010.jpg",
+        "w": 1444,
+        "h": 2048
+      },
+      {
+        "file": "/photos/projects/tamraght-hostel/011.jpg",
+        "w": 1451,
+        "h": 2048
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -218,7 +880,30 @@
       "IMG_1436.jpeg",
       "IMG_1446.jpeg"
     ],
-    "folder": " Personal shooting with the Olympian champion Rhizlane Siba"
+    "folder": " Personal shooting with the Olympian champion Rhizlane Siba",
+    "slug": "personal-shooting-with-the-olympian-champion-rhizlane-siba",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/personal-shooting-with-the-olympian-champion-rhizlane-siba/001.jpg",
+        "w": 4672,
+        "h": 5840
+      },
+      {
+        "file": "/photos/projects/personal-shooting-with-the-olympian-champion-rhizlane-siba/002.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/personal-shooting-with-the-olympian-champion-rhizlane-siba/003.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/personal-shooting-with-the-olympian-champion-rhizlane-siba/004.jpg",
+        "w": 4672,
+        "h": 7008
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -234,7 +919,45 @@
       "IMG_6628.jpeg",
       "IMG_6631.jpeg"
     ],
-    "folder": "CHECKMAT Jiu jitsu club "
+    "folder": "CHECKMAT Jiu jitsu club ",
+    "slug": "checkmat-jiu-jitsu-club",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/001.jpg",
+        "w": 3154,
+        "h": 1774
+      },
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/002.jpg",
+        "w": 3154,
+        "h": 1774
+      },
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/003.jpg",
+        "w": 3526,
+        "h": 2175
+      },
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/004.jpg",
+        "w": 4608,
+        "h": 2592
+      },
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/005.jpg",
+        "w": 3154,
+        "h": 1774
+      },
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/006.jpg",
+        "w": 3529,
+        "h": 2298
+      },
+      {
+        "file": "/photos/projects/checkmat-jiu-jitsu-club/007.jpg",
+        "w": 4172,
+        "h": 3423
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -262,7 +985,105 @@
       "_DSC4106.jpeg",
       "_DSC8799.jpeg"
     ],
-    "folder": "Fe\u0301de\u0301ration Royale Marocaine de Golf HASSAN II TROPHY "
+    "folder": "Fe\u0301de\u0301ration Royale Marocaine de Golf HASSAN II TROPHY ",
+    "slug": "federation-royale-marocaine-de-golf-hassan-ii-trophy",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/001.jpg",
+        "w": 5840,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/002.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/003.jpg",
+        "w": 6803,
+        "h": 4069
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/004.jpg",
+        "w": 5763,
+        "h": 3836
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/005.jpg",
+        "w": 3072,
+        "h": 3840
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/006.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/007.jpg",
+        "w": 6514,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/008.jpg",
+        "w": 2458,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/009.jpg",
+        "w": 2128,
+        "h": 1420
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/010.jpg",
+        "w": 4672,
+        "h": 6110
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/011.jpg",
+        "w": 2717,
+        "h": 3865
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/012.jpg",
+        "w": 3668,
+        "h": 2445
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/013.jpg",
+        "w": 6017,
+        "h": 3471
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/014.jpg",
+        "w": 4672,
+        "h": 4701
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/015.jpg",
+        "w": 4416,
+        "h": 2759
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/016.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/017.jpg",
+        "w": 4672,
+        "h": 2259
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/018.jpg",
+        "w": 4672,
+        "h": 2259
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-de-golf-hassan-ii-trophy/019.jpg",
+        "w": 6260,
+        "h": 3333
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -297,7 +1118,140 @@
       "IMG_2704.jpeg",
       "IMG_2775.jpeg"
     ],
-    "folder": "Fe\u0301de\u0301ration Royale Marocaine des Sports\nE\u0301questres. Morocco royal tour "
+    "folder": "Fe\u0301de\u0301ration Royale Marocaine des Sports\nE\u0301questres. Morocco royal tour ",
+    "slug": "federation-royale-marocaine-des-sports-equestres-morocco-royal-tour",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/001.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/002.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/003.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/004.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/005.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/006.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/007.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/008.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/009.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/010.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/011.jpg",
+        "w": 3965,
+        "h": 2685
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/012.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/013.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/014.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/015.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/016.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/017.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/018.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/019.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/020.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/021.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/022.jpg",
+        "w": 3576,
+        "h": 2384
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/023.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/024.jpg",
+        "w": 2406,
+        "h": 1604
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/025.jpg",
+        "w": 6466,
+        "h": 4311
+      },
+      {
+        "file": "/photos/projects/federation-royale-marocaine-des-sports-equestres-morocco-royal-tour/026.jpg",
+        "w": 6178,
+        "h": 4119
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -330,7 +1284,130 @@
       "IMG_6348.jpeg",
       "dji_mimo_20251025_180942_20251025180943_1761418452624_photo.jpeg"
     ],
-    "folder": "Ironman Morocco "
+    "folder": "Ironman Morocco ",
+    "slug": "ironman-morocco",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/ironman-morocco/001.jpg",
+        "w": 4608,
+        "h": 2592
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/002.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/003.jpg",
+        "w": 5312,
+        "h": 4170
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/004.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/005.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/006.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/007.jpg",
+        "w": 2845,
+        "h": 4259
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/008.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/009.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/010.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/011.jpg",
+        "w": 2592,
+        "h": 3344
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/012.jpg",
+        "w": 5088,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/013.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/014.jpg",
+        "w": 7952,
+        "h": 4472
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/015.jpg",
+        "w": 3902,
+        "h": 2195
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/016.jpg",
+        "w": 5993,
+        "h": 2720
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/017.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/018.jpg",
+        "w": 3705,
+        "h": 6584
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/019.jpg",
+        "w": 7008,
+        "h": 3944
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/020.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/021.jpg",
+        "w": 3944,
+        "h": 5690
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/022.jpg",
+        "w": 2592,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/023.jpg",
+        "w": 3944,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/ironman-morocco/024.jpg",
+        "w": 1728,
+        "h": 3072
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -396,7 +1473,295 @@
       "IMG_8927_TIF.jpeg",
       "IMG_8929_TIF.jpeg"
     ],
-    "folder": "Rally Africa eco race "
+    "folder": "Rally Africa eco race ",
+    "slug": "rally-africa-eco-race",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/rally-africa-eco-race/001.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/002.jpg",
+        "w": 1931,
+        "h": 2897
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/003.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/004.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/005.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/006.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/007.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/008.jpg",
+        "w": 4214,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/009.jpg",
+        "w": 4170,
+        "h": 2774
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/010.jpg",
+        "w": 4211,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/011.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/012.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/013.jpg",
+        "w": 4175,
+        "h": 3004
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/014.jpg",
+        "w": 3034,
+        "h": 3735
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/015.jpg",
+        "w": 4888,
+        "h": 3188
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/016.jpg",
+        "w": 3973,
+        "h": 2519
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/017.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/018.jpg",
+        "w": 6448,
+        "h": 4299
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/019.jpg",
+        "w": 4608,
+        "h": 3045
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/020.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/021.jpg",
+        "w": 5807,
+        "h": 3869
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/022.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/023.jpg",
+        "w": 6358,
+        "h": 4239
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/024.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/025.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/026.jpg",
+        "w": 3032,
+        "h": 2499
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/027.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/028.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/029.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/030.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/031.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/032.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/033.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/034.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/035.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/036.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/037.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/038.jpg",
+        "w": 3072,
+        "h": 3654
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/039.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/040.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/041.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/042.jpg",
+        "w": 3072,
+        "h": 4608
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/043.jpg",
+        "w": 3072,
+        "h": 2729
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/044.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/045.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/046.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/047.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/048.jpg",
+        "w": 4672,
+        "h": 6390
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/049.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/050.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/051.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/052.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/053.jpg",
+        "w": 4672,
+        "h": 7008
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/054.jpg",
+        "w": 4590,
+        "h": 6363
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/055.jpg",
+        "w": 3072,
+        "h": 3689
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/056.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/rally-africa-eco-race/057.jpg",
+        "w": 7008,
+        "h": 4672
+      }
+    ]
   },
   {
     "cat": "sports",
@@ -427,6 +1792,119 @@
       "IMG_5574.jpeg",
       "IMG_5575.jpeg"
     ],
-    "folder": "Surf WSL "
+    "folder": "Surf WSL ",
+    "slug": "surf-wsl",
+    "secondaryPhotos": [
+      {
+        "file": "/photos/projects/surf-wsl/001.jpg",
+        "w": 5580,
+        "h": 3761
+      },
+      {
+        "file": "/photos/projects/surf-wsl/002.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/surf-wsl/003.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/surf-wsl/004.jpg",
+        "w": 2048,
+        "h": 3071
+      },
+      {
+        "file": "/photos/projects/surf-wsl/005.jpg",
+        "w": 2048,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/surf-wsl/006.jpg",
+        "w": 6027,
+        "h": 4018
+      },
+      {
+        "file": "/photos/projects/surf-wsl/007.jpg",
+        "w": 3998,
+        "h": 3544
+      },
+      {
+        "file": "/photos/projects/surf-wsl/008.jpg",
+        "w": 6521,
+        "h": 4244
+      },
+      {
+        "file": "/photos/projects/surf-wsl/009.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/surf-wsl/010.jpg",
+        "w": 3407,
+        "h": 2887
+      },
+      {
+        "file": "/photos/projects/surf-wsl/011.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/surf-wsl/012.jpg",
+        "w": 3748,
+        "h": 2595
+      },
+      {
+        "file": "/photos/projects/surf-wsl/013.jpg",
+        "w": 6294,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/surf-wsl/014.jpg",
+        "w": 6257,
+        "h": 4171
+      },
+      {
+        "file": "/photos/projects/surf-wsl/015.jpg",
+        "w": 5965,
+        "h": 3977
+      },
+      {
+        "file": "/photos/projects/surf-wsl/016.jpg",
+        "w": 7008,
+        "h": 4672
+      },
+      {
+        "file": "/photos/projects/surf-wsl/017.jpg",
+        "w": 2048,
+        "h": 3071
+      },
+      {
+        "file": "/photos/projects/surf-wsl/018.jpg",
+        "w": 3872,
+        "h": 2453
+      },
+      {
+        "file": "/photos/projects/surf-wsl/019.jpg",
+        "w": 4608,
+        "h": 3072
+      },
+      {
+        "file": "/photos/projects/surf-wsl/020.jpg",
+        "w": 2048,
+        "h": 1368
+      },
+      {
+        "file": "/photos/projects/surf-wsl/021.jpg",
+        "w": 2048,
+        "h": 1365
+      },
+      {
+        "file": "/photos/projects/surf-wsl/022.jpg",
+        "w": 2048,
+        "h": 1365
+      }
+    ]
   }
 ]

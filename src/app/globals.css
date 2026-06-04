@@ -5,9 +5,10 @@
   --bg-soft: #0c0c0c;
   --fg: #f2f2f2;
   --muted: #8a8a8a;
-  --faint: #4a4a4a;
+  --faint: #848484;
   --red: #ffffff; /* accent reduced to white — black & white only */
   --line: rgba(255, 255, 255, 0.12);
+  --line-form: rgba(255, 255, 255, 0.32);
 }
 
 * { box-sizing: border-box; }
@@ -176,7 +177,7 @@ a { color: inherit; text-decoration: none; }
 input, textarea, select {
   background: transparent;
   border: none;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-form);
   color: var(--fg);
   font-family: inherit;
   font-size: 14px;
@@ -193,7 +194,12 @@ input::placeholder, textarea::placeholder {
   font-size: 12px;
   letter-spacing: 0.08em;
 }
-input:focus, textarea:focus, select:focus { border-color: var(--red); }
+input:focus, textarea:focus, select:focus {
+  border-color: var(--fg);
+  color: var(--fg);
+}
+select { color: var(--faint); }
+select:valid:not([value=""]) { color: var(--fg); }
 select option { background: #111; color: var(--fg); }
 
 /* marquee */
