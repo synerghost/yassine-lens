@@ -22,7 +22,7 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
     const body = encodeURIComponent(
       `Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\nDate: ${form.date}\n\n${form.message}`
     );
-    window.open(`mailto:Yassinezennar45@gmail.com?subject=${subject}&body=${body}`);
+    window.open(`mailto:contact@yassine-lens.com?subject=${subject}&body=${body}`);
     setSent(true);
   };
 
@@ -65,7 +65,7 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
                 Contact
               </p>
               {[
-                { l: "Email", v: "Yassinezennar45@gmail.com", h: "mailto:Yassinezennar45@gmail.com" },
+                { l: "Email", v: "contact@yassine-lens.com", h: "mailto:contact@yassine-lens.com" },
                 { l: "Phone", v: "0772 905 020", h: "tel:+212772905020" },
                 { l: "Instagram", v: "@yasines_lens", h: "https://www.instagram.com/yasines_lens/" },
                 { l: "LinkedIn", v: "Yassine Zennar", h: "https://www.linkedin.com/in/yassine-zennar-216244380/" },

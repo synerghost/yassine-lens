@@ -23,7 +23,7 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
   }, [photos]);
 
   return (
-    <div ref={ref} style={{ padding: "92px 0 96px", position: "relative" }}>
+    <div ref={ref} style={{ padding: "132px 0 96px", position: "relative" }}>
       {photos.map((p, i) => {
         const right = i % 2 === 1;
         const overlap = i > 0 && i % 2 === 1; // odd cards ride up onto the previous one

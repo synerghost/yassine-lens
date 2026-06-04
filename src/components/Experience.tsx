@@ -1,13 +1,21 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { Photo } from "@/lib/photos";
 import Canvas from "./Canvas";
 import InfoOverlay from "./InfoOverlay";
+import FilterBar from "./FilterBar";
 
 export default function Experience({ photos }: { photos: Photo[] }) {
   const [info, setInfo] = useState(false);
   const [hint, setHint] = useState(true);
+  const [cats, setCats] = useState<string[]>([]);
+
+  const filtered = useMemo(
+    () => (cats.length ? photos.filter((p) => cats.includes(p.cat)) : photos),
+    [cats, photos]
+  );
+  const filterKey = cats.length ? [...cats].sort().join("-") : "all";
 
   useEffect(() => {
     const hide = () => setHint(false);
@@ -105,8 +113,11 @@ export default function Experience({ photos }: { photos: Photo[] }) {
         </button>
       </header>
 
-      {/* Single giant canvas */}
-      <Canvas photos={photos} paused={info} />
+      {/* Glassy category filters */}
+      <FilterBar selected={cats} onChange={setCats} />
+
+      {/* Single giant canvas (remounts on filter change -> fresh layout from top) */}
+      <Canvas key={filterKey} photos={filtered} paused={info} />
 
       {/* Auto-scroll hint */}
       <div
