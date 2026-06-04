@@ -38,7 +38,7 @@ export default function Experience({ photos }: { photos: Photo[] }) {
           border: 0,
         }}
       >
-        Yasines Lens — Yassine Zennar, photographe nightlife, concerts, sport &amp; motorsport au Maroc
+        Yasines Lens — Yassine Zennar, photographe music, hospitality &amp; sport au Maroc
       </h1>
 
       {/* Minimal glass header (iOS-style liquid glass) */}

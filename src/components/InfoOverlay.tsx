@@ -55,10 +55,9 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
               Yassine <span style={{ fontStyle: "italic", color: "var(--red)" }}>Zennar</span>
             </h2>
             <p style={{ marginTop: 26, fontSize: 15, lineHeight: 1.9, color: "var(--muted)", maxWidth: 460 }}>
-              Photographer based in Morocco. I document vibrant nightlife, live music and
-              high-octane sport with authenticity, style and artistic depth — from MOGA
-              Festival dance floors to rally cars tearing through the desert at the Africa
-              Eco Race.
+              Photographer based in Morocco. I capture music, hospitality and sport with
+              authenticity, style and artistic depth — from live stages and festivals to
+              refined venues and the decisive moment of competition.
             </p>
 
             <div style={{ marginTop: 44 }}>

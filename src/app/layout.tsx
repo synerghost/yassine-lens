@@ -5,10 +5,10 @@ import Cursor from "@/components/Cursor";
 export const metadata: Metadata = {
   title: "Yasines Lens — Yassine Zennar · Photographer",
   description:
-    "Yassine Zennar (Yasines Lens) — photographer capturing nightlife, live music, motorsport and action sports across Morocco. Book a session.",
+    "Yassine Zennar (Yasines Lens) — photographer capturing music, hospitality and sport across Morocco. Book a session.",
   openGraph: {
     title: "Yasines Lens — Yassine Zennar · Photographer",
-    description: "Capturing the pulse of the night & the thrill of the chase.",
+    description: "Music · Hospitality · Sport — photography by Yassine Zennar, Morocco.",
     type: "website",
   },
 };

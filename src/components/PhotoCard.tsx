@@ -26,8 +26,14 @@ export default function PhotoCard({
         style={{ objectFit: "cover" }}
       />
       <div className="cap">
-        <span className="meta">{CAT_LABEL[photo.cat] || photo.cat}</span>
-        <span className="name">{photo.title}</span>
+        {photo.title ? (
+          <>
+            <span className="meta">{CAT_LABEL[photo.cat] || photo.cat}</span>
+            <span className="name">{photo.title}</span>
+          </>
+        ) : (
+          <span className="name">{CAT_LABEL[photo.cat] || photo.cat}</span>
+        )}
       </div>
     </>
   );
