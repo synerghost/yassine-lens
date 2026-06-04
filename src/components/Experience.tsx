@@ -24,6 +24,23 @@ export default function Experience({ photos }: { photos: Photo[] }) {
 
   return (
     <>
+      {/* Accessible / SEO heading (visually hidden) */}
+      <h1
+        style={{
+          position: "absolute",
+          width: 1,
+          height: 1,
+          padding: 0,
+          margin: -1,
+          overflow: "hidden",
+          clip: "rect(0 0 0 0)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        Yasines Lens — Yassine Zennar, photographe nightlife, concerts, sport &amp; motorsport au Maroc
+      </h1>
+
       {/* Minimal glass header (iOS-style liquid glass) */}
       <header
         style={{
