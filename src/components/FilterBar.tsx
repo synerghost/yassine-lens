@@ -2,15 +2,6 @@
 
 import { CATEGORIES, CAT_LABEL } from "@/lib/categories";
 
-const glass: React.CSSProperties = {
-  background: "rgba(18,18,18,0.34)",
-  backdropFilter: "blur(22px) saturate(1.6)",
-  WebkitBackdropFilter: "blur(22px) saturate(1.6)",
-  border: "1px solid rgba(255,255,255,0.14)",
-  boxShadow:
-    "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25), 0 10px 34px rgba(0,0,0,0.35)",
-};
-
 export default function FilterBar({
   selected,
   onChange,
@@ -25,53 +16,67 @@ export default function FilterBar({
   const chip = (active: boolean): React.CSSProperties => ({
     display: "inline-flex",
     alignItems: "center",
-    gap: 7,
-    padding: "8px 14px",
+    gap: 6,
+    padding: "7px 14px",
     borderRadius: 999,
     fontSize: 11,
     letterSpacing: "0.12em",
     textTransform: "uppercase",
     cursor: "none",
     whiteSpace: "nowrap",
-    transition: "background .25s ease, color .25s ease, border-color .25s ease",
-    border: `1px solid ${active ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.18)"}`,
-    background: active ? "#fff" : "transparent",
+    flexShrink: 0,
+    transition: "background .2s ease, color .2s ease, border-color .2s ease",
+    border: `1px solid ${active ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.22)"}`,
+    background: active ? "#fff" : "rgba(10,10,10,0.55)",
+    backdropFilter: "blur(14px) saturate(1.4)",
+    WebkitBackdropFilter: "blur(14px) saturate(1.4)",
     color: active ? "#000" : "rgba(255,255,255,0.8)",
+    boxShadow: active
+      ? "none"
+      : "inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 16px rgba(0,0,0,0.3)",
   });
 
   const box = (active: boolean): React.CSSProperties => ({
-    width: 12,
-    height: 12,
+    width: 11,
+    height: 11,
     borderRadius: 3,
-    border: `1px solid ${active ? "#000" : "rgba(255,255,255,0.5)"}`,
+    border: `1px solid ${active ? "#000" : "rgba(255,255,255,0.45)"}`,
     background: active ? "#000" : "transparent",
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
-    fontSize: 9,
+    fontSize: 8,
     lineHeight: 1,
     color: "#fff",
+    flexShrink: 0,
   });
 
   return (
     <div
       style={{
         position: "fixed",
-        top: 76,
-        left: "50%",
-        transform: "translateX(-50%)",
+        top: 68,
+        left: 0,
+        right: 0,
         zIndex: 240,
-        maxWidth: "calc(100vw - 24px)",
         display: "flex",
-        flexWrap: "wrap",
+        flexDirection: "row",
+        alignItems: "center",
         justifyContent: "center",
         gap: 6,
-        padding: 6,
-        borderRadius: 999,
-        ...glass,
-      }}
+        padding: "0 16px",
+        overflowX: "auto",
+        overflowY: "hidden",
+        scrollbarWidth: "none",
+        WebkitOverflowScrolling: "touch",
+      } as React.CSSProperties}
     >
-      <button onClick={() => onChange([])} style={chip(selected.length === 0)} data-cursor="Filter" aria-pressed={selected.length === 0}>
+      <button
+        onClick={() => onChange([])}
+        style={chip(selected.length === 0)}
+        data-cursor="Filter"
+        aria-pressed={selected.length === 0}
+      >
         All
       </button>
       {CATEGORIES.map((cat) => {
