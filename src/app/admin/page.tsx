@@ -163,7 +163,7 @@ export default function AdminPage() {
       <div style={{ ...S.page, display: "grid", placeItems: "center" }}>
         <form onSubmit={login} style={{ width: 320, display: "flex", flexDirection: "column", gap: 16 }}>
           <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 16, letterSpacing: "0.22em" }}>YASINES&nbsp;LENS</div>
+            <div style={{ fontSize: 16, letterSpacing: "0.22em" }}>YASSINE&apos;S&nbsp;LENS</div>
             <div style={{ ...S.label, marginTop: 6 }}>Admin</div>
           </div>
           {!configured && (
@@ -202,7 +202,7 @@ export default function AdminPage() {
         {/* header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16, marginBottom: 8 }}>
           <div>
-            <div style={{ fontSize: 18, letterSpacing: "0.2em" }}>YASINES&nbsp;LENS</div>
+            <div style={{ fontSize: 18, letterSpacing: "0.2em" }}>YASSINE&apos;S&nbsp;LENS</div>
             <div style={S.label}>Gestion des médias</div>
           </div>
           <div style={{ display: "flex", gap: 12, alignItems: "center" }}>

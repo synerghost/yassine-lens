@@ -3,11 +3,11 @@ import "./globals.css";
 import Cursor from "@/components/Cursor";
 
 export const metadata: Metadata = {
-  title: "Yasines Lens — Yassine Zennar · Photographer",
+  title: "Yassine's Lens — Yassine Zennar · Photographer",
   description:
-    "Yassine Zennar (Yasines Lens) — photographer capturing music, hospitality and sport across Morocco. Book a session.",
+    "Yassine Zennar (Yassine's Lens) — photographer capturing music, hospitality and sport across Morocco. Book a session.",
   openGraph: {
-    title: "Yasines Lens — Yassine Zennar · Photographer",
+    title: "Yassine's Lens — Yassine Zennar · Photographer",
     description: "Music · Hospitality · Sport — photography by Yassine Zennar, Morocco.",
     type: "website",
   },

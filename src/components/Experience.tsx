@@ -38,7 +38,7 @@ export default function Experience({ photos }: { photos: Photo[] }) {
           border: 0,
         }}
       >
-        Yasines Lens — Yassine Zennar, photographe music, hospitality &amp; sport au Maroc
+        Yassine&apos;s Lens — Yassine Zennar, photographe music, hospitality &amp; sport au Maroc
       </h1>
 
       {/* Minimal glass header (iOS-style liquid glass) */}
@@ -64,7 +64,7 @@ export default function Experience({ photos }: { photos: Photo[] }) {
         }}
       >
         <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "#fff" }}>
-          YASINES&nbsp;LENS
+          YASSINE&apos;S&nbsp;LENS
         </span>
 
         <button

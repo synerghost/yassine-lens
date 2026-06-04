@@ -49,7 +49,7 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
           {/* About */}
           <div>
             <span className="font-mono" style={{ fontSize: 11, color: "var(--red)", letterSpacing: "0.2em", textTransform: "uppercase" }}>
-              Yasines Lens
+              Yassine&apos;s Lens
             </span>
             <h2 className="font-serif" style={{ fontSize: "clamp(40px,5vw,76px)", lineHeight: 0.98, fontWeight: 400, marginTop: 18, letterSpacing: "-0.02em" }}>
               Yassine <span style={{ fontStyle: "italic", color: "var(--red)" }}>Zennar</span>
@@ -67,7 +67,8 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
               {[
                 { l: "Email", v: "Yassinezennar45@gmail.com", h: "mailto:Yassinezennar45@gmail.com" },
                 { l: "Phone", v: "0772 905 020", h: "tel:+212772905020" },
-                { l: "Instagram", v: "@yasines_lens", h: "https://instagram.com/yasines_lens" },
+                { l: "Instagram", v: "@yasines_lens", h: "https://www.instagram.com/yasines_lens/" },
+                { l: "LinkedIn", v: "Yassine Zennar", h: "https://www.linkedin.com/in/yassine-zennar-216244380/" },
               ].map((c) => (
                 <a
                   key={c.l}
