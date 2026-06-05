@@ -30,13 +30,6 @@ export default function RootLayout({
         />
         {/* dns-prefetch for Vercel Blob CDN */}
         <link rel="dns-prefetch" href="https://public.blob.vercel-storage.com" />
-        {/* Prevent flash of wrong theme — runs before React hydrates */}
-        {/* Prevent flash of wrong theme + expose to ThemeProvider (no re-render needed) */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var t=localStorage.getItem('theme')==='light'?'light':'dark';document.documentElement.setAttribute('data-theme',t);window.__THEME__=t})()`,
-          }}
-        />
       </head>
       <body>
         <ThemeProvider>

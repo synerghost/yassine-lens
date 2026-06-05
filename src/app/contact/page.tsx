@@ -1,11 +1,7 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-
-export const metadata: Metadata = {
-  title: "Contact — Yassine's Lens",
-  description: "Get in touch with Yassine Zennar for photography bookings and inquiries.",
-};
 
 export default function ContactPage() {
   return (
