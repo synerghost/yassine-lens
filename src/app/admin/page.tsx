@@ -224,7 +224,10 @@ export default function AdminPage() {
 
         {!blobOk && (
           <p style={{ fontSize: 13, color: "#ffcf6b", background: "#1a1407", border: "1px solid #3a2e10", padding: "12px 14px", borderRadius: 8, marginBottom: 20, lineHeight: 1.6 }}>
-            ⚠️ Vercel Blob n&apos;est pas activé. Upload/sauvegarde désactivés.
+            ⚠️ <strong>BLOB_READ_WRITE_TOKEN manquant.</strong> Upload/sauvegarde désactivés.<br/>
+            <small style={{ marginTop: 6, display: "block", opacity: 0.8 }}>
+              Vercel Settings → Environment Variables → Ajoute <code>BLOB_READ_WRITE_TOKEN</code> (copié du dashboard Blob) → Redéploie.
+            </small>
           </p>
         )}
 
