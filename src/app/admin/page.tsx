@@ -43,8 +43,6 @@ export default function AdminPage() {
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
   const secondaryFileRef = useRef<HTMLInputElement>(null);
   const [uploadingSlug, setUploadingSlug] = useState<string | null>(null);
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [draggedProjectSlug, setDraggedProjectSlug] = useState<string | null>(null);
   const mainImageFileRef = useRef<HTMLInputElement>(null);
   const [mainImageSlug, setMainImageSlug] = useState<string | null>(null);
   const [showNewProjectForm, setShowNewProjectForm] = useState(false);
@@ -137,6 +135,18 @@ export default function AdminPage() {
     setProjectsDirty(true);
   };
 
+  const moveSecondary = (slug: string, idx: number, dir: -1 | 1) => {
+    setProjects((ps) => ps.map((p) => {
+      if (p.slug !== slug) return p;
+      const arr = [...p.secondaryPhotos];
+      const j = idx + dir;
+      if (j < 0 || j >= arr.length) return p;
+      [arr[idx], arr[j]] = [arr[j], arr[idx]];
+      return { ...p, secondaryPhotos: arr };
+    }));
+    setProjectsDirty(true);
+  };
+
   const onChangeMainImage = async (slug: string, files: FileList | null) => {
     if (!files?.length) return;
     setProjectsBusy(true);
@@ -157,34 +167,6 @@ export default function AdminPage() {
     if (mainImageFileRef.current) mainImageFileRef.current.value = "";
   };
 
-  // Drag & Drop for secondary photos
-  const handleDragStart = (e: React.DragEvent, projSlug: string, idx: number) => {
-    setDraggedIndex(idx);
-    setDraggedProjectSlug(projSlug);
-    e.dataTransfer.effectAllowed = "move";
-  };
-
-  const handleDragOver = (e: React.DragEvent) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-  };
-
-  const handleDrop = (e: React.DragEvent, projSlug: string, dropIdx: number) => {
-    e.preventDefault();
-    if (draggedIndex === null || draggedProjectSlug !== projSlug) return;
-    if (draggedIndex === dropIdx) { setDraggedIndex(null); return; }
-
-    setProjects((ps) => ps.map((p) => {
-      if (p.slug !== projSlug) return p;
-      const arr = [...p.secondaryPhotos];
-      const [item] = arr.splice(draggedIndex!, 1);
-      arr.splice(dropIdx, 0, item);
-      return { ...p, secondaryPhotos: arr };
-    }));
-    setProjectsDirty(true);
-    setDraggedIndex(null);
-    setDraggedProjectSlug(null);
-  };
 
   const onAddSecondary = async (slug: string, files: FileList | null) => {
     if (!files?.length) return;
@@ -474,80 +456,86 @@ export default function AdminPage() {
                         )}
 
                         {proj.secondaryPhotos.length > 0 ? (
-                          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
+                          <div style={{ display: "grid", gap: 10 }}>
                             {proj.secondaryPhotos.map((sp, si) => (
                               <div
                                 key={sp.file + si}
-                                draggable
-                                onDragStart={(e) => handleDragStart(e, proj.slug, si)}
-                                onDragOver={handleDragOver}
-                                onDrop={(e) => handleDrop(e, proj.slug, si)}
                                 style={{
-                                  position: "relative",
-                                  aspectRatio: `${sp.w}/${sp.h}`,
-                                  background: "#000",
+                                  display: "grid",
+                                  gridTemplateColumns: "1fr 80px",
+                                  gap: 10,
+                                  alignItems: "center",
+                                  padding: 10,
+                                  background: "#0a0a0a",
                                   borderRadius: 8,
-                                  overflow: "hidden",
-                                  cursor: "grab",
-                                  opacity: draggedIndex === si && draggedProjectSlug === proj.slug ? 0.5 : 1,
-                                  transition: "opacity .2s",
-                                  border: draggedIndex === si && draggedProjectSlug === proj.slug ? "2px dashed #fff" : "1px solid #2a2a2a",
+                                  border: "1px solid #1f1f1f",
                                 }}
                               >
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img src={sp.file} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }} />
-
-                                {/* Drag indicator */}
-                                <div style={{
-                                  position: "absolute",
-                                  top: 0,
-                                  left: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  background: "rgba(0,0,0,0.4)",
-                                  opacity: 0,
-                                  transition: "opacity .2s",
-                                  fontSize: 28,
-                                  color: "#fff",
-                                }}
-                                onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
-                                onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
-                                >
-                                  ≡
-                                </div>
-
-                                {/* Delete button */}
-                                <button
-                                  onClick={() => removeSecondary(proj.slug, si)}
+                                {/* Image preview */}
+                                <div
                                   style={{
-                                    position: "absolute",
-                                    top: 6,
-                                    right: 6,
-                                    width: 36,
-                                    height: 36,
-                                    borderRadius: "50%",
-                                    background: "rgba(0,0,0,0.6)",
-                                    color: "#fff",
-                                    border: "1px solid rgba(255,255,255,0.2)",
-                                    cursor: "pointer",
-                                    fontSize: 18,
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    minWidth: 36,
-                                    minHeight: 36,
+                                    position: "relative",
+                                    aspectRatio: `${sp.w}/${sp.h}`,
+                                    background: "#000",
+                                    borderRadius: 6,
+                                    overflow: "hidden",
                                   }}
                                 >
-                                  ×
-                                </button>
+                                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                                  <img src={sp.file} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                </div>
+
+                                {/* Controls: up/down and delete */}
+                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
+                                  <button
+                                    onClick={() => moveSecondary(proj.slug, si, -1)}
+                                    disabled={si === 0}
+                                    style={{
+                                      ...S.btnSmall,
+                                      opacity: si === 0 ? 0.3 : 1,
+                                      padding: "10px 8px",
+                                      fontSize: 16,
+                                      fontWeight: "bold",
+                                    }}
+                                    title="Move up"
+                                  >
+                                    ↑
+                                  </button>
+                                  <button
+                                    onClick={() => moveSecondary(proj.slug, si, 1)}
+                                    disabled={si === proj.secondaryPhotos.length - 1}
+                                    style={{
+                                      ...S.btnSmall,
+                                      opacity: si === proj.secondaryPhotos.length - 1 ? 0.3 : 1,
+                                      padding: "10px 8px",
+                                      fontSize: 16,
+                                      fontWeight: "bold",
+                                    }}
+                                    title="Move down"
+                                  >
+                                    ↓
+                                  </button>
+                                  <button
+                                    onClick={() => removeSecondary(proj.slug, si)}
+                                    style={{
+                                      ...S.btnSmall,
+                                      gridColumn: "1 / -1",
+                                      padding: "10px 8px",
+                                      fontSize: 14,
+                                      background: "rgba(255,100,100,0.1)",
+                                      borderColor: "rgba(255,100,100,0.3)",
+                                      color: "#ff9999",
+                                    }}
+                                    title="Delete photo"
+                                  >
+                                    Delete
+                                  </button>
+                                </div>
                               </div>
                             ))}
                           </div>
                         ) : (
-                          <p style={{ fontSize: 13, color: "#666", textAlign: "center", padding: "20px 0" }}>No gallery photos. Add some to get started.</p>
+                          <p style={{ fontSize: 13, color: "#666", textAlign: "center", padding: "20px 0" }}>No gallery photos yet. Tap "+ Add Photos" to get started.</p>
                         )}
                       </div>
                     </div>
