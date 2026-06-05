@@ -122,10 +122,10 @@ a { color: inherit; text-decoration: none; }
   display: block;
   transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1), filter .7s ease;
   transform: scale(1.03);
-  filter: grayscale(1) brightness(0.92) contrast(1.03);
+  filter: saturate(0.55) brightness(0.94);
   backface-visibility: hidden;
 }
-.card:hover img { transform: scale(1.08); filter: grayscale(0) brightness(1) contrast(1); }
+.card:hover img { transform: scale(1.08); filter: saturate(1) brightness(1); }
 
 .card .cap {
   position: absolute;

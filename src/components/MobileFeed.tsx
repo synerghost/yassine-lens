@@ -57,7 +57,7 @@ export default function MobileFeed({ photos, noCap }: { photos: Photo[]; noCap?:
               marginRight: right ? 14 : "auto",
               marginTop: i === 0 ? 0 : overlap ? "-22vw" : "9vw",
               aspectRatio: `${p.w} / ${p.h}`,
-              zIndex: isActive ? 999 : i + 1,
+              zIndex: isActive ? 230 : i + 1,
               opacity: overlap && !isActive ? 0.82 : 1,
               boxShadow: isActive ? "0 24px 80px rgba(0,0,0,0.8)" : overlap ? "0 18px 60px rgba(0,0,0,0.6)" : "none",
               transitionDelay: `${(i % 3) * 80}ms`,
