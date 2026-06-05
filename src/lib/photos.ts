@@ -60,9 +60,37 @@ export async function getRawGallery(): Promise<Photo[]> {
   return (bundled.photos as Photo[]) ?? [];
 }
 
-/** Public gallery for the homepage. */
+/**
+ * Public gallery for the homepage.
+ *
+ * The card cover for each project is driven by the project's `main` image
+ * whenever it has been changed in the admin (i.e. it points to an uploaded
+ * Blob URL). Untouched projects keep their original gallery photo, so there
+ * is no regression. The gallery photo's stored w/h are kept for the masonry
+ * layout — the new cover is simply object-fit: cover cropped into that slot.
+ */
 export async function getGallery(): Promise<Photo[]> {
-  return interleave(await getRawGallery());
+  const raw = await getRawGallery();
+  try {
+    const { getProjects } = await import("./projects");
+    const projects = await getProjects();
+    const mainBySlug = new Map<string, string>();
+    for (const p of projects) {
+      // Only override when the admin uploaded a new cover (full Blob/HTTP URL).
+      if (p.slug && typeof p.main === "string" && p.main.startsWith("http")) {
+        mainBySlug.set(p.slug, p.main);
+      }
+    }
+    if (mainBySlug.size) {
+      const merged = raw.map((ph) =>
+        ph.slug && mainBySlug.has(ph.slug) ? { ...ph, file: mainBySlug.get(ph.slug)! } : ph
+      );
+      return interleave(merged);
+    }
+  } catch {
+    /* fall through to plain gallery */
+  }
+  return interleave(raw);
 }
 
 export function aboutImage(): string {

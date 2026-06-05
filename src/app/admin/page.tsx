@@ -369,7 +369,7 @@ export default function AdminPage() {
                       }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={proj.main} alt={proj.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <img src={proj.main?.startsWith("http") || proj.main?.startsWith("/") ? proj.main : `/photos/${proj.main}`} alt={proj.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       <div
                         style={{
                           position: "absolute",
