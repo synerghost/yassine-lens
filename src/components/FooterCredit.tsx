@@ -7,40 +7,18 @@ export default function FooterCredit() {
 
   return (
     <>
-      <footer
-        style={{
-          position: "fixed",
-          bottom: 16,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 150,
-          pointerEvents: "none",
-        }}
-        className="footer-credit-desktop"
-      >
+      <footer className="footer-credit">
         <a
           href="https://bsstd.com"
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-            fontSize: 11,
-            fontWeight: 300,
-            letterSpacing: "0.04em",
-            color: "rgba(255,255,255,0.42)",
-            textDecoration: "none",
-            pointerEvents: "auto",
-            whiteSpace: "nowrap",
-            position: "relative",
-            display: "inline-block",
-            transition: "color .3s ease",
-          }}
+          className="footer-credit-link"
           onMouseEnter={e => {
-            e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+            e.currentTarget.style.color = "rgba(255,255,255,0.88)";
             if (glowRef.current) glowRef.current.style.opacity = "1";
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.color = "rgba(255,255,255,0.42)";
+            e.currentTarget.style.color = "";
             if (glowRef.current) glowRef.current.style.opacity = "0";
           }}
         >
@@ -49,55 +27,48 @@ export default function FooterCredit() {
             style={{
               position: "absolute",
               inset: "-18px -30px",
-              background: "radial-gradient(ellipse at 50% 120%, rgba(255,255,200,0.18) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse at 50% 120%, rgba(255,255,200,0.16) 0%, transparent 70%)",
               pointerEvents: "none",
               opacity: 0,
               transition: "opacity .35s ease",
-              borderRadius: "50%",
             }}
           />
           Site créé par Base Studio
         </a>
       </footer>
 
-      {/* Mobile version: above the filter bar, larger + more visible */}
-      <footer
-        style={{
-          position: "fixed",
-          bottom: 96,
-          left: "50%",
-          transform: "translateX(-50%)",
-          zIndex: 150,
-          pointerEvents: "none",
-        }}
-        className="footer-credit-mobile"
-      >
-        <a
-          href="https://bsstd.com"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-            fontSize: 12,
-            fontWeight: 300,
-            letterSpacing: "0.04em",
-            color: "rgba(255,255,255,0.52)",
-            textDecoration: "none",
-            pointerEvents: "auto",
-            whiteSpace: "nowrap",
-            display: "inline-block",
-            padding: "8px 12px",
-          }}
-        >
-          Site créé par Base Studio
-        </a>
-      </footer>
-
       <style>{`
-        .footer-credit-mobile { display: none; }
+        .footer-credit {
+          position: fixed;
+          bottom: 18px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 150;
+          pointer-events: none;
+        }
+        .footer-credit-link {
+          font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+          font-size: 11px;
+          font-weight: 300;
+          letter-spacing: 0.04em;
+          color: rgba(255,255,255,0.42);
+          text-decoration: none;
+          pointer-events: auto;
+          white-space: nowrap;
+          position: relative;
+          display: inline-block;
+          transition: color .3s ease;
+        }
+        /* Mobile: sit above the filter bar (bottom ~24px + ~46px height + 10px gap = ~80px) */
         @media (hover: none), (pointer: coarse) {
-          .footer-credit-desktop { display: none; }
-          .footer-credit-mobile { display: block; }
+          .footer-credit {
+            bottom: 82px;
+          }
+          .footer-credit-link {
+            font-size: 12px;
+            color: rgba(255,255,255,0.50);
+            padding: 6px 10px;
+          }
         }
       `}</style>
     </>
