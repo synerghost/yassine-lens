@@ -10,6 +10,7 @@ const WIDTHS = [0.82, 0.74, 0.86, 0.7, 0.8, 0.76];
 export default function MobileFeed({ photos }: { photos: Photo[] }) {
   const ref = useRef<HTMLDivElement>(null);
   const [showTop, setShowTop] = useState(false);
+  const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 300);
@@ -28,6 +29,14 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
     ref.current?.querySelectorAll(".reveal").forEach((n) => io.observe(n));
     return () => io.disconnect();
   }, [photos]);
+
+  // Dismiss active card when tapping outside
+  useEffect(() => {
+    if (activeIdx === null) return;
+    const dismiss = () => setActiveIdx(null);
+    const t = setTimeout(() => window.addEventListener("touchstart", dismiss, { once: true }), 50);
+    return () => clearTimeout(t);
+  }, [activeIdx]);
 
   return (
     <>
@@ -63,24 +72,33 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
     <div ref={ref} style={{ padding: "114px 0 96px", position: "relative" }}>
       {photos.map((p, i) => {
         const right = i % 2 === 1;
-        const overlap = i > 0 && i % 2 === 1; // odd cards ride up onto the previous one
+        const overlap = i > 0 && i % 2 === 1;
         const widthPct = Math.round(WIDTHS[i % WIDTHS.length] * 100);
+        const isActive = activeIdx === i;
+
         return (
           <div
             key={p.file + i}
-            className="card reveal"
+            className={`card reveal${isActive ? " mobile-active" : ""}`}
             data-cursor="View"
+            onTouchStart={() => setActiveIdx(i)}
             style={{
               position: "relative",
               width: `${widthPct}%`,
               marginLeft: right ? "auto" : 14,
               marginRight: right ? 14 : "auto",
-              // negative top margin => the card overlaps (superimposes) the previous one
               marginTop: i === 0 ? 0 : overlap ? "-22vw" : "9vw",
               aspectRatio: `${p.w} / ${p.h}`,
-              zIndex: i + 1,
-              boxShadow: overlap ? "0 18px 60px rgba(0,0,0,0.6)" : "none",
+              // Active card flies above everything; overlap cards slightly transparent
+              zIndex: isActive ? 999 : i + 1,
+              opacity: overlap && !isActive ? 0.82 : 1,
+              boxShadow: isActive
+                ? "0 24px 80px rgba(0,0,0,0.8)"
+                : overlap
+                ? "0 18px 60px rgba(0,0,0,0.6)"
+                : "none",
               transitionDelay: `${(i % 3) * 80}ms`,
+              transition: "opacity .3s ease, z-index 0s, box-shadow .3s ease",
             }}
           >
             <PhotoCard photo={p} sizes="100vw" priority={i < 2} />
