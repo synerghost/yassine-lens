@@ -1,65 +1,57 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { upload } from "@vercel/blob/client";
 import { CATEGORIES, CAT_LABEL } from "@/lib/categories";
 
-function isHeic(file: File): boolean {
-  const t = (file.type || "").toLowerCase();
-  const n = file.name.toLowerCase();
-  return t.includes("heic") || t.includes("heif") || n.endsWith(".heic") || n.endsWith(".heif");
-}
-
 /**
- * Convert HEIC/HEIF (default iPhone/iPad format) to JPEG in the browser so the
- * photos display everywhere (Chrome/Android can't render HEIC). Safari decodes
- * HEIC natively into an <img>, which we re-encode to JPEG via a canvas. No
- * external dependency. Falls back to the original file if conversion fails.
- * Non-HEIC files are returned untouched (no quality change).
+ * Normalize any picked image to a web-friendly JPEG in the browser:
+ *  - converts HEIC/HEIF (iPhone/iPad default) so it displays on every browser,
+ *  - downscales to a max edge so the upload stays well under Vercel's 4.5 MB
+ *    serverless body limit (the cause of the previous upload failures),
+ *  - re-encodes as JPEG at high quality.
+ * Falls back to the original file if the browser can't decode it.
  */
-async function maybeConvertHeic(file: File): Promise<File> {
-  if (!isHeic(file)) return file;
+async function normalizeImage(file: File): Promise<File> {
   const url = URL.createObjectURL(file);
   try {
     const img = await new Promise<HTMLImageElement>((resolve, reject) => {
       const im = new Image();
       im.onload = () => resolve(im);
-      im.onerror = () => reject(new Error("HEIC decode not supported in this browser"));
+      im.onerror = () => reject(new Error("decode failed"));
       im.src = url;
     });
-    const maxDim = 3000; // generous web-quality cap
+    const maxDim = 2800; // ample for retina web display; keeps files small
     const ratio = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
-    const w = Math.round(img.naturalWidth * ratio);
-    const h = Math.round(img.naturalHeight * ratio);
+    const w = Math.max(1, Math.round(img.naturalWidth * ratio));
+    const h = Math.max(1, Math.round(img.naturalHeight * ratio));
     const canvas = document.createElement("canvas");
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext("2d");
     if (!ctx) return file;
     ctx.drawImage(img, 0, 0, w, h);
-    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/jpeg", 0.92));
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/jpeg", 0.88));
     if (!blob) return file;
-    const newName = file.name.replace(/\.[^.]+$/, "") + ".jpg";
-    return new File([blob], newName, { type: "image/jpeg" });
+    return new File([blob], file.name.replace(/\.[^.]+$/, "") + ".jpg", { type: "image/jpeg" });
   } catch {
-    return file; // fall back to original (allowlist still permits heic)
+    return file; // fall back to original
   } finally {
     URL.revokeObjectURL(url);
   }
 }
 
-/** Upload a file directly from the browser to Vercel Blob (no 4.5 MB limit). */
+/** Upload an image: normalize client-side, then POST to the server put() route. */
 async function uploadFile(file: File): Promise<string> {
-  const toUpload = await maybeConvertHeic(file);
-  const ext = (toUpload.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
-  const pathname = `photos/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const blob = await upload(pathname, toUpload, {
-    access: "public",
-    handleUploadUrl: "/api/admin/upload",
-    contentType: toUpload.type || undefined,
-    multipart: true, // robust for large photos
-  });
-  return blob.url;
+  const norm = await normalizeImage(file);
+  const fd = new FormData();
+  fd.append("file", norm);
+  const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
+  if (!r.ok) {
+    const d = await r.json().catch(() => ({}));
+    throw new Error(d.error || `Upload failed (HTTP ${r.status})`);
+  }
+  const { url } = await r.json();
+  return url as string;
 }
 
 type Photo = { file: string; w: number; h: number; cat: string; title: string; slug?: string };
