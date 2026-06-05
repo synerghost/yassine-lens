@@ -7,6 +7,7 @@ import type { Photo } from "@/lib/photos";
 import Canvas from "./Canvas";
 import { CAT_LABEL } from "@/lib/categories";
 import ThemeToggle from "./ThemeToggle";
+import GlassHeader, { CircleButton } from "./GlassHeader";
 
 type Project = {
   cat: string;
@@ -44,37 +45,12 @@ export default function ProjectExperience({
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Strip slug+title from photos so PhotoCard renders bare (no hover cap, no link)
-  const barePhotos: Photo[] = photos.map(({ ...p }) => ({
-    ...p,
-    slug: undefined,
-    title: "",
-  }));
+  // noCap=true passed to Canvas handles this — no need to reconstruct photo objects
+  const barePhotos = photos as Photo[];
 
   return (
     <>
-      {/* Header */}
-      <header
-        style={{
-          position: "fixed",
-          top: 12,
-          left: 12,
-          right: 12,
-          zIndex: 250,
-          height: 54,
-          borderRadius: 16,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 10px 0 22px",
-          background: "rgba(18,18,18,0.34)",
-          backdropFilter: "blur(22px) saturate(1.6)",
-          WebkitBackdropFilter: "blur(22px) saturate(1.6)",
-          border: "1px solid rgba(255,255,255,0.14)",
-          boxShadow:
-            "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25), 0 10px 34px rgba(0,0,0,0.35)",
-        }}
-      >
+      <GlassHeader>
         <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
           YASSINE&apos;S&nbsp;LENS
         </span>
@@ -83,34 +59,13 @@ export default function ProjectExperience({
           <Link
             href="/"
             data-cursor="Close"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            color: "rgba(255,255,255,0.8)",
-            cursor: "none",
-            textDecoration: "none",
-            fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-            fontSize: 10,
-            fontWeight: 300,
-            letterSpacing: "0.1em",
-          }}
-        >
-          Back
-          <span
-            style={{
-              width: 38, height: 38,
-              borderRadius: "50%",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 16, lineHeight: 1,
-              background: "rgba(255,255,255,0.10)",
-              border: "1px solid rgba(255,255,255,0.28)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3)",
-            }}
-          >×</span>
+            style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--muted)", cursor: "none", textDecoration: "none", fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", fontSize: 10, fontWeight: 300, letterSpacing: "0.1em" }}
+          >
+            Back
+            <CircleButton style={{ fontSize: 16 }}>×</CircleButton>
           </Link>
         </div>
-      </header>
+      </GlassHeader>
 
       {/* Project title + description banner */}
       <div

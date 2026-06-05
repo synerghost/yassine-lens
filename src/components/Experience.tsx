@@ -6,6 +6,7 @@ import Canvas from "./Canvas";
 import InfoOverlay from "./InfoOverlay";
 import FilterBar from "./FilterBar";
 import ThemeToggle from "./ThemeToggle";
+import GlassHeader, { CircleButton } from "./GlassHeader";
 
 export default function Experience({ photos }: { photos: Photo[] }) {
   const [info, setInfo] = useState(false);
@@ -50,72 +51,25 @@ export default function Experience({ photos }: { photos: Photo[] }) {
         Yassine&apos;s Lens — Yassine Zennar, photographe music, hospitality &amp; sport au Maroc
       </h1>
 
-      {/* Minimal glass header (iOS-style liquid glass) */}
-      <header
-        style={{
-          position: "fixed",
-          top: 12,
-          left: 12,
-          right: 12,
-          zIndex: 250,
-          height: 54,
-          borderRadius: 16,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 10px 0 22px",
-          background: "rgba(18,18,18,0.34)",
-          backdropFilter: "blur(22px) saturate(1.6)",
-          WebkitBackdropFilter: "blur(22px) saturate(1.6)",
-          border: "1px solid rgba(255,255,255,0.14)",
-          boxShadow:
-            "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25), 0 10px 34px rgba(0,0,0,0.35)",
-        }}
-      >
+      <GlassHeader>
         <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
           YASSINE&apos;S&nbsp;LENS
         </span>
-
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <ThemeToggle />
           <button
             onClick={() => setInfo(true)}
             data-cursor="Open"
             aria-label="Info & booking"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              background: "transparent",
-              border: "none",
-              color: "var(--fg)",
-              cursor: "none",
-              padding: 0,
-            }}
-        >
-          <span style={{ fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.08em", color: "rgba(255,255,255,0.85)" }}>
-            Contact
-          </span>
-          <span
-            style={{
-              width: 38,
-              height: 38,
-              borderRadius: "50%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: 17,
-              lineHeight: 1,
-              background: "rgba(255,255,255,0.10)",
-              border: "1px solid rgba(255,255,255,0.28)",
-              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3)",
-            }}
+            style={{ display: "flex", alignItems: "center", gap: 10, background: "transparent", border: "none", color: "var(--fg)", cursor: "none", padding: 0 }}
           >
-            +
-          </span>
+            <span style={{ fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.08em", color: "var(--muted)" }}>
+              Contact
+            </span>
+            <CircleButton>+</CircleButton>
           </button>
         </div>
-      </header>
+      </GlassHeader>
 
       {/* Glassy category filters */}
       <FilterBar selected={cats} onChange={setCats} />

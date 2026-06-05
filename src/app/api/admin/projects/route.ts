@@ -49,16 +49,20 @@ export async function POST(req: Request) {
   const incoming = body?.projects;
   if (!Array.isArray(incoming)) return NextResponse.json({ error: "Invalid payload." }, { status: 400 });
 
-  const clean: ProjectEntry[] = incoming.map((p: ProjectEntry) => ({
-    cat: p.cat || "sports",
-    title: (p.title || "").toString().slice(0, 120),
-    slug: (p.slug || "").toString(),
-    main: (p.main || "").toString(),
-    folder: (p.folder || "").toString(),
-    instagram: (p.instagram || "").toString().slice(0, 60),
-    description: (p.description || "").toString().slice(0, 500),
-    secondaryPhotos: Array.isArray(p.secondaryPhotos) ? p.secondaryPhotos : [],
-  }));
+  const clean: ProjectEntry[] = incoming
+    .filter((p): p is ProjectEntry => p != null && typeof p === "object")
+    .map((p: ProjectEntry) => ({
+      cat: p.cat || "sports",
+      title: (p.title || "").toString().slice(0, 120),
+      slug: (p.slug || "").toString(),
+      main: (p.main || "").toString(),
+      folder: (p.folder || "").toString(),
+      instagram: (p.instagram || "").toString().slice(0, 60),
+      description: (p.description || "").toString().slice(0, 500),
+      secondaryPhotos: Array.isArray(p.secondaryPhotos)
+        ? p.secondaryPhotos.filter((s) => s != null && typeof s.file === "string")
+        : [],
+    }));
 
   await put(PROJECTS_BLOB, JSON.stringify(clean), {
     access: "public",
