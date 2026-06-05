@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { Photo } from "@/lib/photos";
 import { buildLayout, type Placed } from "@/lib/layout";
 import PhotoCard from "./PhotoCard";
+import ScrollBar from "./ScrollBar";
 
 /**
  * One giant fixed canvas (Wanda-style). Custom scroll engine:
@@ -24,6 +25,7 @@ export default function DesktopCanvas({
   const [contentH, setContentH] = useState(0);
   const [contentW, setContentW] = useState(0);
   const [ready, setReady] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const target = useRef(0);
   const current = useRef(0);
@@ -114,6 +116,8 @@ export default function DesktopCanvas({
       if (Math.abs(target.current - current.current) < 0.05) current.current = target.current;
       currentX.current += (targetX.current - currentX.current) * 0.06;
       track.style.transform = `translate3d(${currentX.current}px, ${-current.current}px, 0)`;
+      const prog = maxScroll.current > 0 ? current.current / maxScroll.current : 0;
+      setScrollProgress(Math.max(0, Math.min(1, prog)));
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -138,6 +142,12 @@ export default function DesktopCanvas({
   }, [ready]);
 
   return (
+    <>
+    <ScrollBar
+      progress={scrollProgress}
+      onSeek={(p) => { target.current = p * maxScroll.current; }}
+      onScrollTop={() => { target.current = 0; }}
+    />
     <div ref={viewportRef} style={{ position: "fixed", inset: 0, overflow: "hidden", zIndex: 1 }}>
       <div
         ref={trackRef}
@@ -164,5 +174,6 @@ export default function DesktopCanvas({
         ))}
       </div>
     </div>
+    </>
   );
 }

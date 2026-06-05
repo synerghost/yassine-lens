@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Photo } from "@/lib/photos";
 import PhotoCard from "./PhotoCard";
 
@@ -9,6 +9,13 @@ const WIDTHS = [0.82, 0.74, 0.86, 0.7, 0.8, 0.76];
 
 export default function MobileFeed({ photos }: { photos: Photo[] }) {
   const ref = useRef<HTMLDivElement>(null);
+  const [showTop, setShowTop] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowTop(window.scrollY > 300);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -23,6 +30,36 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
   }, [photos]);
 
   return (
+    <>
+    {/* Scroll to top — mobile */}
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      style={{
+        position: "fixed",
+        right: 16,
+        bottom: 28,
+        zIndex: 220,
+        width: 40,
+        height: 40,
+        borderRadius: "50%",
+        background: "rgba(18,18,18,0.7)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        border: "1px solid rgba(255,255,255,0.2)",
+        color: "rgba(255,255,255,0.85)",
+        fontSize: 16,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        opacity: showTop ? 1 : 0,
+        pointerEvents: showTop ? "auto" : "none",
+        transition: "opacity .3s ease",
+        cursor: "pointer",
+      }}
+      aria-label="Scroll to top"
+    >
+      ↑
+    </button>
     <div ref={ref} style={{ padding: "114px 0 96px", position: "relative" }}>
       {photos.map((p, i) => {
         const right = i % 2 === 1;
@@ -51,5 +88,6 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
         );
       })}
     </div>
+    </>
   );
 }
