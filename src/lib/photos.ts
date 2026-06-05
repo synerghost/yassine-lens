@@ -81,12 +81,26 @@ export async function getGallery(): Promise<Photo[]> {
         mainBySlug.set(p.slug, p.main);
       }
     }
-    if (mainBySlug.size) {
-      const merged = raw.map((ph) =>
-        ph.slug && mainBySlug.has(ph.slug) ? { ...ph, file: mainBySlug.get(ph.slug)! } : ph
-      );
-      return interleave(merged);
-    }
+    // 1) Override existing cards' cover with the project's uploaded main image.
+    const merged = mainBySlug.size
+      ? raw.map((ph) => (ph.slug && mainBySlug.has(ph.slug) ? { ...ph, file: mainBySlug.get(ph.slug)! } : ph))
+      : raw.slice();
+
+    // 2) Add cards for newly created projects that have a cover but no gallery
+    //    entry yet, so they appear on the homepage after saving.
+    const present = new Set(raw.map((ph) => ph.slug).filter(Boolean));
+    const extras: Photo[] = projects
+      .filter((p) => p.slug && !present.has(p.slug) && typeof p.main === "string" && p.main.startsWith("http"))
+      .map((p) => ({
+        file: p.main,
+        w: p.mainW || 1200,
+        h: p.mainH || 1500,
+        cat: p.cat,
+        title: p.title,
+        slug: p.slug,
+      }));
+
+    return interleave([...merged, ...extras]);
   } catch {
     /* fall through to plain gallery */
   }

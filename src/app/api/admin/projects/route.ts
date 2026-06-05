@@ -11,6 +11,8 @@ type ProjectEntry = {
   title: string;
   slug: string;
   main: string;
+  mainW?: number;
+  mainH?: number;
   folder: string;
   instagram: string;
   description: string;
@@ -56,6 +58,8 @@ export async function POST(req: Request) {
       title: (p.title || "").toString().slice(0, 120),
       slug: (p.slug || "").toString(),
       main: (p.main || "").toString(),
+      mainW: Number(p.mainW) || undefined,
+      mainH: Number(p.mainH) || undefined,
       folder: (p.folder || "").toString(),
       instagram: (p.instagram || "").toString().slice(0, 60),
       description: (p.description || "").toString().slice(0, 500),

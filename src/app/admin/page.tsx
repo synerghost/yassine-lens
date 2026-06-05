@@ -65,7 +65,7 @@ async function uploadFile(file: File): Promise<string> {
 type Photo = { file: string; w: number; h: number; cat: string; title: string; slug?: string };
 type SecondaryPhoto = { file: string; w: number; h: number };
 type Project = {
-  cat: string; title: string; slug: string; main: string; folder: string;
+  cat: string; title: string; slug: string; main: string; mainW?: number; mainH?: number; folder: string;
   instagram: string; description: string; secondaryPhotos: SecondaryPhoto[];
 };
 
@@ -191,6 +191,36 @@ export default function AdminPage() {
     setProjectsDirty(true);
   };
 
+  const slugify = (s: string) =>
+    s.toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+  const createProject = () => {
+    const title = newProjectData.title.trim();
+    if (!title) { setProjectsStatus("Enter a project title first."); return; }
+    const base = slugify(title) || `project-${Date.now()}`;
+    const existing = new Set(projects.map((p) => p.slug));
+    let slug = base, n = 2;
+    while (existing.has(slug)) slug = `${base}-${n++}`;
+    const newProj: Project = {
+      cat: newProjectData.cat, title, slug, main: "", folder: "",
+      instagram: "", description: "", secondaryPhotos: [],
+    };
+    setProjects((ps) => [newProj, ...ps]);
+    setProjectsDirty(true);
+    setShowNewProjectForm(false);
+    setNewProjectData({ title: "", cat: "sports" });
+    setExpandedSlug(slug);
+    setProjectsStatus("Project created — add a cover & photos, then tap Save Changes.");
+  };
+
+  const deleteProject = (slug: string) => {
+    if (typeof window !== "undefined" && !window.confirm("Delete this project? This cannot be undone after saving.")) return;
+    setProjects((ps) => ps.filter((p) => p.slug !== slug));
+    setExpandedSlug(null);
+    setProjectsDirty(true);
+    setProjectsStatus("Project removed — tap Save Changes to publish.");
+  };
+
   const removeSecondary = (slug: string, idx: number) => {
     setProjects((ps) => ps.map((p) => p.slug !== slug ? p : {
       ...p, secondaryPhotos: p.secondaryPhotos.filter((_, i) => i !== idx)
@@ -216,8 +246,9 @@ export default function AdminPage() {
     setProjectsStatus("Uploading main image…");
     const f = files[0];
     try {
+      const dims = await readDims(f);
       const url = await uploadFile(f);
-      updateProject(slug, { main: url });
+      updateProject(slug, { main: url, mainW: dims.w, mainH: dims.h });
       setProjectsStatus("Main image updated — tap Save Changes to publish.");
     } catch (err) {
       console.error("Main image upload failed:", err);
@@ -380,7 +411,15 @@ export default function AdminPage() {
                     </select>
                   </div>
                 </div>
-                <p style={{ fontSize: 12, color: "#8a8a8a", marginTop: 12 }}>You'll be able to upload images after creating the project.</p>
+                <p style={{ fontSize: 12, color: "#8a8a8a", marginTop: 12 }}>You'll be able to upload a cover &amp; photos right after creating it.</p>
+                <div style={{ display: "flex", gap: 10, marginTop: 14 }}>
+                  <button style={S.btn} onClick={createProject} disabled={!newProjectData.title.trim()}>
+                    Create Project
+                  </button>
+                  <button style={S.btnSecondary} onClick={() => { setShowNewProjectForm(false); setNewProjectData({ title: "", cat: "sports" }); }}>
+                    Cancel
+                  </button>
+                </div>
               </div>
             )}
 
@@ -605,6 +644,22 @@ export default function AdminPage() {
                         ) : (
                           <p style={{ fontSize: 13, color: "#666", textAlign: "center", padding: "20px 0" }}>No gallery photos yet. Tap "+ Add Photos" to get started.</p>
                         )}
+                      </div>
+
+                      {/* Danger zone */}
+                      <div style={{ borderTop: "1px solid #1c1c1c", paddingTop: 14, marginTop: 2 }}>
+                        <button
+                          onClick={() => deleteProject(proj.slug)}
+                          style={{
+                            ...S.btnSecondary,
+                            background: "rgba(255,100,100,0.08)",
+                            borderColor: "rgba(255,100,100,0.3)",
+                            color: "#ff9999",
+                            width: "100%",
+                          }}
+                        >
+                          Delete this project
+                        </button>
                       </div>
                     </div>
                   )}

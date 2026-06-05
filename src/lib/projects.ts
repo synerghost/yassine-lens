@@ -7,6 +7,8 @@ export type Project = {
   title: string;
   slug: string;
   main: string;
+  mainW?: number;
+  mainH?: number;
   folder?: string;
   instagram?: string;
   description?: string;
