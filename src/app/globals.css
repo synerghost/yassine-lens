@@ -41,6 +41,7 @@ html { scroll-behavior: auto; }
 body {
   background-color: var(--bg);
   color: var(--fg);
+  overflow-x: hidden; /* prevent horizontal scroll from gyro parallax */
   transition: background-color .4s ease, color .4s ease;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;

@@ -1,12 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  compress: true,
+  poweredByHeader: false,
   images: {
-    // Placeholder photos are served pre-sized from Unsplash; real photos come
-    // from Vercel Blob. Optimizer bypassed -> no remote-pattern / quota limits.
+    // Keep unoptimized for local pre-compressed JPEGs (already at 1500px/85q)
+    // and Vercel Blob CDN images (already edge-cached).
     unoptimized: true,
     remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com", pathname: "/**" },
     ],
   },
@@ -19,6 +20,8 @@ const nextConfig: NextConfig = {
           { key: "X-Frame-Options", value: "SAMEORIGIN" },
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+          { key: "X-DNS-Prefetch-Control", value: "on" },
+          { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains; preload" },
         ],
       },
     ];

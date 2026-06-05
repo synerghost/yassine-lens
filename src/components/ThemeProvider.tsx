@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 type Theme = "dark" | "light";
 
@@ -14,21 +14,21 @@ export function useTheme() {
 }
 
 export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("dark");
-
-  // On mount, read preference (dark by default)
-  useEffect(() => {
-    const saved = localStorage.getItem("theme") as Theme | null;
-    const initial = saved === "light" ? "light" : "dark";
-    setTheme(initial);
-    document.documentElement.setAttribute("data-theme", initial);
-  }, []);
+  // Read from window.__THEME__ which is set synchronously by the inline script
+  // in <head> — avoids a second render/flash vs reading localStorage in useEffect
+  const [theme, setTheme] = useState<Theme>(() => {
+    if (typeof window !== "undefined") {
+      return ((window as Window & { __THEME__?: Theme }).__THEME__) ?? "dark";
+    }
+    return "dark";
+  });
 
   const toggle = () => {
     setTheme((prev) => {
       const next: Theme = prev === "dark" ? "light" : "dark";
       localStorage.setItem("theme", next);
       document.documentElement.setAttribute("data-theme", next);
+      (window as Window & { __THEME__?: Theme }).__THEME__ = next;
       return next;
     });
   };

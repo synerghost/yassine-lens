@@ -66,6 +66,5 @@ export default function MobileFeed({ photos, noCap }: { photos: Photo[]; noCap?:
       })}
     </div>
     </div>
-    </>
   );
 }
