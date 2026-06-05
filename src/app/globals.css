@@ -45,7 +45,6 @@ body {
   transition: background-color .4s ease, color .4s ease;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   margin: 0;
 }
@@ -149,6 +148,7 @@ a { color: inherit; text-decoration: none; }
   cursor: none;
   background: #0a0a0a;
   outline: none;
+  contain: layout style paint; /* avoid reflows / paint thrashing */
 }
 .card img {
   width: 100%;

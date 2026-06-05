@@ -4,9 +4,12 @@ const nextConfig: NextConfig = {
   compress: true,
   poweredByHeader: false,
   images: {
-    // Keep unoptimized for local pre-compressed JPEGs (already at 1500px/85q)
-    // and Vercel Blob CDN images (already edge-cached).
-    unoptimized: true,
+    // Enable Next.js image optimization (critical for Lighthouse perf)
+    // Vercel will auto-optimize at the edge
+    unoptimized: false,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ["image/webp", "image/avif"],
     remotePatterns: [
       { protocol: "https", hostname: "*.public.blob.vercel-storage.com", pathname: "/**" },
     ],

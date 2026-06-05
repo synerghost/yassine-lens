@@ -171,7 +171,7 @@ export default function DesktopCanvas({
             data-cursor="View"
             style={{ left: p.x, top: p.y, width: p.width, height: p.height }}
           >
-            <PhotoCard photo={p} priority={i < 6} noCap={noCap} />
+            <PhotoCard photo={p} priority={i < 6} noCap={noCap} sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw" />
           </div>
         ))}
       </div>
