@@ -6,6 +6,7 @@ import Image from "next/image";
 import type { Photo } from "@/lib/photos";
 import Canvas from "./Canvas";
 import { CAT_LABEL } from "@/lib/categories";
+import ThemeToggle from "./ThemeToggle";
 
 type Project = {
   cat: string;
@@ -74,12 +75,14 @@ export default function ProjectExperience({
             "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25), 0 10px 34px rgba(0,0,0,0.35)",
         }}
       >
-        <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "#fff" }}>
+        <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
           YASSINE&apos;S&nbsp;LENS
         </span>
-        <Link
-          href="/"
-          data-cursor="Close"
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <ThemeToggle />
+          <Link
+            href="/"
+            data-cursor="Close"
           style={{
             display: "flex",
             alignItems: "center",
@@ -105,7 +108,8 @@ export default function ProjectExperience({
               boxShadow: "inset 0 1px 0 rgba(255,255,255,0.3)",
             }}
           >×</span>
-        </Link>
+          </Link>
+        </div>
       </header>
 
       {/* Project title + description banner */}

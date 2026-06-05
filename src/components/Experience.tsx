@@ -5,6 +5,7 @@ import type { Photo } from "@/lib/photos";
 import Canvas from "./Canvas";
 import InfoOverlay from "./InfoOverlay";
 import FilterBar from "./FilterBar";
+import ThemeToggle from "./ThemeToggle";
 
 export default function Experience({ photos }: { photos: Photo[] }) {
   const [info, setInfo] = useState(false);
@@ -71,24 +72,26 @@ export default function Experience({ photos }: { photos: Photo[] }) {
             "inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25), 0 10px 34px rgba(0,0,0,0.35)",
         }}
       >
-        <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "#fff" }}>
+        <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
           YASSINE&apos;S&nbsp;LENS
         </span>
 
-        <button
-          onClick={() => setInfo(true)}
-          data-cursor="Open"
-          aria-label="Info & booking"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 12,
-            background: "transparent",
-            border: "none",
-            color: "#fff",
-            cursor: "none",
-            padding: 0,
-          }}
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <ThemeToggle />
+          <button
+            onClick={() => setInfo(true)}
+            data-cursor="Open"
+            aria-label="Info & booking"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 12,
+              background: "transparent",
+              border: "none",
+              color: "var(--fg)",
+              cursor: "none",
+              padding: 0,
+            }}
         >
           <span style={{ fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.08em", color: "rgba(255,255,255,0.85)" }}>
             Contact
@@ -110,7 +113,8 @@ export default function Experience({ photos }: { photos: Photo[] }) {
           >
             +
           </span>
-        </button>
+          </button>
+        </div>
       </header>
 
       {/* Glassy category filters */}

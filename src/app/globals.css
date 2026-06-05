@@ -4,11 +4,34 @@
   --bg: #000000;
   --bg-soft: #0c0c0c;
   --fg: #f2f2f2;
+  --fg-rgb: 242, 242, 242;
   --muted: #8a8a8a;
   --faint: #848484;
-  --red: #ffffff; /* accent reduced to white — black & white only */
+  --red: #ffffff;
   --line: rgba(255, 255, 255, 0.12);
   --line-form: rgba(255, 255, 255, 0.32);
+  --glass-bg: rgba(18, 18, 18, 0.34);
+  --glass-border: rgba(255, 255, 255, 0.14);
+  --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.22), inset 0 -1px 0 rgba(0,0,0,0.25), 0 10px 34px rgba(0,0,0,0.35);
+  --card-filter: saturate(0.55) brightness(0.94);
+  --card-filter-hover: saturate(1) brightness(1);
+}
+
+[data-theme="light"] {
+  --bg: #f2ede8;
+  --bg-soft: #ece7e1;
+  --fg: #1a1814;
+  --fg-rgb: 26, 24, 20;
+  --muted: #7a7572;
+  --faint: #aaa49f;
+  --red: #1a1814;
+  --line: rgba(0, 0, 0, 0.1);
+  --line-form: rgba(0, 0, 0, 0.22);
+  --glass-bg: rgba(240, 236, 230, 0.72);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-shadow: inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(0,0,0,0.06), 0 8px 28px rgba(0,0,0,0.12);
+  --card-filter: saturate(0.72) brightness(1.01);
+  --card-filter-hover: saturate(1) brightness(1.03);
 }
 
 * { box-sizing: border-box; }
@@ -18,6 +41,7 @@ html { scroll-behavior: auto; }
 body {
   background-color: var(--bg);
   color: var(--fg);
+  transition: background-color .4s ease, color .4s ease;
   font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   font-weight: 300;
   overflow-x: hidden;
@@ -67,6 +91,16 @@ body {
 @media (hover: none), (max-width: 768px) {
   .cursor-dot, .cursor-label { display: none; }
 }
+
+/* ---------- Light mode header + cards ---------- */
+[data-theme="light"] .card { background: #e8e3dc; }
+[data-theme="light"] .card .cap {
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.1) 75%);
+}
+[data-theme="light"] .card .cap .meta { color: rgba(0,0,0,0.5); }
+[data-theme="light"] .card .cap .name { color: rgba(0,0,0,0.85); }
+[data-theme="light"] .card .cap .see-more { color: rgba(0,0,0,0.45); }
+[data-theme="light"] .card:hover .cap .see-more { color: rgba(0,0,0,0.75); }
 
 /* ---------- Links / nav ---------- */
 a { color: inherit; text-decoration: none; }
@@ -122,10 +156,10 @@ a { color: inherit; text-decoration: none; }
   display: block;
   transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1), filter .7s ease;
   transform: scale(1.07);
-  filter: saturate(0.55) brightness(0.94);
+  filter: var(--card-filter);
   backface-visibility: hidden;
 }
-.card:hover img { transform: scale(1.08); filter: saturate(1) brightness(1); }
+.card:hover img { transform: scale(1.08); filter: var(--card-filter-hover); }
 
 .card .cap {
   position: absolute;
