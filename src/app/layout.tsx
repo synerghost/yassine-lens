@@ -38,7 +38,7 @@ export default function RootLayout({
           pointerEvents: "none",
         }}>
           <a
-            href="https://basestudio.fr"
+            href="https://bsstd.com"
             target="_blank"
             rel="noopener noreferrer"
             style={{
