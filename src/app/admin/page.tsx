@@ -1,7 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { upload } from "@vercel/blob/client";
 import { CATEGORIES, CAT_LABEL } from "@/lib/categories";
+
+/** Upload a file directly from the browser to Vercel Blob (no 4.5 MB limit). */
+async function uploadFile(file: File): Promise<string> {
+  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const pathname = `photos/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const blob = await upload(pathname, file, {
+    access: "public",
+    handleUploadUrl: "/api/admin/upload",
+    contentType: file.type || undefined,
+    multipart: true, // robust for large photos
+  });
+  return blob.url;
+}
 
 type Photo = { file: string; w: number; h: number; cat: string; title: string; slug?: string };
 type SecondaryPhoto = { file: string; w: number; h: number };
@@ -89,19 +103,23 @@ export default function AdminPage() {
     if (!files?.length) return;
     setGalleryBusy(true);
     const added: Photo[] = [];
+    let failed = 0;
     for (let i = 0; i < files.length; i++) {
       setGalleryStatus(`Uploading ${i + 1}/${files.length}…`);
       const f = files[i];
       const dims = await readDims(f);
-      const fd = new FormData(); fd.append("file", f);
-      const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
-      if (r.ok) {
-        const { url } = await r.json();
+      try {
+        const url = await uploadFile(f);
         added.push({ file: url, w: dims.w, h: dims.h, cat: "sports", title: f.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ") });
+      } catch (err) {
+        failed++;
+        console.error("Upload failed:", err);
       }
     }
     setPhotos((p) => [...added, ...p]); setGalleryDirty(true); setGalleryBusy(false);
-    setGalleryStatus(`${added.length} photo(s) added — save to publish.`);
+    setGalleryStatus(failed
+      ? `${added.length} added, ${failed} failed (${(files[0] as File)?.type || "unknown type"}).`
+      : `${added.length} photo(s) added — save to publish.`);
     if (galleryFileRef.current) galleryFileRef.current.value = "";
   };
 
@@ -150,17 +168,15 @@ export default function AdminPage() {
   const onChangeMainImage = async (slug: string, files: FileList | null) => {
     if (!files?.length) return;
     setProjectsBusy(true);
+    setProjectsStatus("Uploading main image…");
     const f = files[0];
-    const dims = await readDims(f);
-    const fd = new FormData();
-    fd.append("file", f);
-    const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
-    if (r.ok) {
-      const { url } = await r.json();
+    try {
+      const url = await uploadFile(f);
       updateProject(slug, { main: url });
-      setProjectsStatus("Main image updated — save to publish.");
-    } else {
-      setProjectsStatus("Failed to upload main image.");
+      setProjectsStatus("Main image updated — tap Save Changes to publish.");
+    } catch (err) {
+      console.error("Main image upload failed:", err);
+      setProjectsStatus(`Upload failed: ${(err as Error).message || "unknown error"}`);
     }
     setProjectsBusy(false);
     setMainImageSlug(null);
@@ -172,19 +188,26 @@ export default function AdminPage() {
     if (!files?.length) return;
     setUploadingSlug(slug); setProjectsBusy(true);
     const added: SecondaryPhoto[] = [];
+    let failed = 0;
     for (let i = 0; i < files.length; i++) {
       setProjectsStatus(`Uploading ${i + 1}/${files.length}…`);
       const f = files[i];
       const dims = await readDims(f);
-      const fd = new FormData(); fd.append("file", f);
-      const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
-      if (r.ok) { const { url } = await r.json(); added.push({ file: url, w: dims.w, h: dims.h }); }
+      try {
+        const url = await uploadFile(f);
+        added.push({ file: url, w: dims.w, h: dims.h });
+      } catch (err) {
+        failed++;
+        console.error("Secondary upload failed:", err);
+      }
     }
     setProjects((ps) => ps.map((p) => p.slug !== slug ? p : {
       ...p, secondaryPhotos: [...p.secondaryPhotos, ...added]
     }));
     setProjectsDirty(true); setProjectsBusy(false); setUploadingSlug(null);
-    setProjectsStatus(`${added.length} photo(s) added — save to publish.`);
+    setProjectsStatus(failed
+      ? `${added.length} added, ${failed} failed — tap Save Changes.`
+      : `${added.length} photo(s) added — tap Save Changes to publish.`);
     if (secondaryFileRef.current) secondaryFileRef.current.value = "";
   };
 

@@ -1,33 +1,55 @@
 import { NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { isAuthed } from "@/lib/admin";
 
-export async function POST(req: Request) {
-  if (!(await isAuthed())) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
+/**
+ * Client-side upload token endpoint.
+ *
+ * The browser uploads the file DIRECTLY to Vercel Blob (via @vercel/blob/client
+ * `upload()`), which bypasses the 4.5 MB serverless request-body limit that was
+ * causing large photos to fail with "Failed to upload". This route only issues
+ * a short-lived upload token after checking the admin session.
+ */
+export async function POST(request: Request): Promise<NextResponse> {
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     return NextResponse.json({ error: "Blob storage is not configured." }, { status: 500 });
   }
-  const form = await req.formData();
-  const file = form.get("file");
-  if (!(file instanceof File)) {
-    return NextResponse.json({ error: "No file provided." }, { status: 400 });
+
+  const body = (await request.json()) as HandleUploadBody;
+
+  try {
+    const jsonResponse = await handleUpload({
+      body,
+      request,
+      onBeforeGenerateToken: async () => {
+        // Cookies are sent on this initial request, so the session is valid here.
+        if (!(await isAuthed())) {
+          throw new Error("Unauthorized");
+        }
+        return {
+          allowedContentTypes: [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/gif",
+            "image/heic",
+            "image/heif",
+          ],
+          addRandomSuffix: true,
+          maximumSizeInBytes: 50 * 1024 * 1024, // 50 MB
+        };
+      },
+      // Called by Vercel after the upload finishes (production only).
+      onUploadCompleted: async () => {
+        /* no-op: pages are revalidated when the gallery/projects are saved */
+      },
+    });
+
+    return NextResponse.json(jsonResponse);
+  } catch (error) {
+    return NextResponse.json(
+      { error: (error as Error).message || "Upload failed." },
+      { status: 400 },
+    );
   }
-  const MAX_SIZE = 20 * 1024 * 1024; // 20 MB
-  if (file.size > MAX_SIZE) {
-    return NextResponse.json({ error: "File too large (max 20 MB)." }, { status: 413 });
-  }
-  const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
-  if (!ALLOWED_TYPES.includes(file.type)) {
-    return NextResponse.json({ error: "Unsupported file type." }, { status: 415 });
-  }
-  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
-  const name = `photos/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const blob = await put(name, file, {
-    access: "public",
-    addRandomSuffix: false,
-    contentType: file.type || undefined,
-  });
-  return NextResponse.json({ url: blob.url });
 }
