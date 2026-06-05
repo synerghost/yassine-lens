@@ -169,21 +169,23 @@ a { color: inherit; text-decoration: none; }
   position: absolute;
   bottom: 14px;
   right: 16px;
-  font-family: 'Instrument Serif', serif;
-  font-size: 13px;
-  font-style: italic;
-  color: rgba(255,255,255,0.6);
-  letter-spacing: 0.01em;
-  transform: translateX(4px);
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.08em;
+  transform: translateX(6px);
   opacity: 0;
-  transition: transform .4s cubic-bezier(.22,1,.36,1) .08s, opacity .4s ease .08s, color .2s ease;
+  transition: transform .4s cubic-bezier(.22,1,.36,1) .06s, opacity .4s ease .06s, color .2s ease;
   pointer-events: none;
 }
 .card:hover .cap .see-more {
   transform: translateX(0);
   opacity: 1;
 }
-.card:active .cap .see-more {
+.card:active .cap .see-more,
+.card:focus .cap .see-more {
   color: #fff;
   opacity: 1;
 }

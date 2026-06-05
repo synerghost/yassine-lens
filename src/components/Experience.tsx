@@ -135,7 +135,7 @@ export default function Experience({ photos }: { photos: Photo[] }) {
           pointerEvents: "none",
         }}
       >
-        <span className="font-mono" style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>
+        <span style={{ fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", fontSize: 10, fontWeight: 300, letterSpacing: "0.06em", color: "rgba(255,255,255,0.45)" }}>
           Move cursor to the edge — or scroll
         </span>
         <span style={{ color: "var(--red)", fontSize: 12 }}>↓</span>

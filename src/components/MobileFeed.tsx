@@ -69,7 +69,7 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
     >
       ↑
     </button>
-    <div ref={ref} style={{ padding: "114px 0 96px", position: "relative" }}>
+    <div ref={ref} style={{ padding: "80px 0 120px", position: "relative" }}>
       {photos.map((p, i) => {
         const right = i % 2 === 1;
         const overlap = i > 0 && i % 2 === 1;
