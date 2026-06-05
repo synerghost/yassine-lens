@@ -90,8 +90,8 @@ export default function Experience({ photos }: { photos: Photo[] }) {
             padding: 0,
           }}
         >
-          <span className="font-mono" style={{ fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.85)" }}>
-            Index
+          <span style={{ fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif", fontSize: 11, fontWeight: 300, letterSpacing: "0.08em", color: "rgba(255,255,255,0.85)" }}>
+            Contact
           </span>
           <span
             style={{

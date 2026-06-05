@@ -7,7 +7,7 @@ import MobileFeed from "./MobileFeed";
 
 const MOBILE_MAX = 820;
 
-export default function Canvas({ photos, paused }: { photos: Photo[]; paused: boolean }) {
+export default function Canvas({ photos, paused, noCap }: { photos: Photo[]; paused: boolean; noCap?: boolean }) {
   const [mode, setMode] = useState<"loading" | "desktop" | "mobile">("loading");
 
   useEffect(() => {
@@ -26,8 +26,8 @@ export default function Canvas({ photos, paused }: { photos: Photo[]; paused: bo
 
   if (mode === "loading") return null;
   return mode === "mobile" ? (
-    <MobileFeed photos={photos} />
+    <MobileFeed photos={photos} noCap={noCap} />
   ) : (
-    <DesktopCanvas photos={photos} paused={paused} />
+    <DesktopCanvas photos={photos} paused={paused} noCap={noCap} />
   );
 }

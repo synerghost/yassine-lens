@@ -15,9 +15,11 @@ import ScrollBar from "./ScrollBar";
 export default function DesktopCanvas({
   photos,
   paused,
+  noCap,
 }: {
   photos: Photo[];
   paused: boolean;
+  noCap?: boolean;
 }) {
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -169,7 +171,7 @@ export default function DesktopCanvas({
             data-cursor="View"
             style={{ left: p.x, top: p.y, width: p.width, height: p.height }}
           >
-            <PhotoCard photo={p} priority={i < 6} />
+            <PhotoCard photo={p} priority={i < 6} noCap={noCap} />
           </div>
         ))}
       </div>

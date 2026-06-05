@@ -3,12 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import type { Photo } from "@/lib/photos";
 import PhotoCard from "./PhotoCard";
+import { useGyroParallax } from "@/hooks/useGyroParallax";
 
 const WIDTHS = [0.82, 0.74, 0.86, 0.7, 0.8, 0.76];
 
-export default function MobileFeed({ photos }: { photos: Photo[] }) {
+export default function MobileFeed({ photos, noCap }: { photos: Photo[]; noCap?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
+  const gyroRef = useGyroParallax(8);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -27,6 +29,14 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
   }, [activeIdx]);
 
   return (
+    <div
+      ref={gyroRef}
+      style={{
+        willChange: "transform",
+        transition: "transform 0.05s linear",
+        overflow: "hidden",
+      }}
+    >
     <div ref={ref} style={{ padding: "80px 0 160px", position: "relative" }}>
       {photos.map((p, i) => {
         const right = i % 2 === 1;
@@ -54,10 +64,12 @@ export default function MobileFeed({ photos }: { photos: Photo[] }) {
               transition: "opacity .3s ease, box-shadow .3s ease",
             }}
           >
-            <PhotoCard photo={p} sizes="100vw" priority={i < 2} />
+            <PhotoCard photo={p} sizes="100vw" priority={i < 2} noCap={noCap} />
           </div>
         );
       })}
     </div>
+    </div>
+    </>
   );
 }

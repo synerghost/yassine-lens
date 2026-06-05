@@ -184,15 +184,14 @@ export default function ProjectExperience({
       {/* Canvas — photos with no hover cap, click opens lightbox */}
       <div
         onClick={(e) => {
-          // Find clicked photo via closest .card
           const card = (e.target as HTMLElement).closest(".card");
           if (!card) return;
           const cards = Array.from(document.querySelectorAll(".card"));
           const idx = cards.indexOf(card as HTMLElement);
-          if (idx >= 0 && barePhotos[idx]) setLightbox(photos[idx]);
+          if (idx >= 0 && photos[idx]) setLightbox(photos[idx]);
         }}
       >
-        <Canvas photos={barePhotos} paused={!!lightbox} />
+        <Canvas photos={barePhotos} paused={!!lightbox} noCap={true} />
       </div>
 
       {/* Scroll hint */}
