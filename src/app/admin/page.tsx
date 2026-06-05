@@ -4,14 +4,59 @@ import { useEffect, useRef, useState } from "react";
 import { upload } from "@vercel/blob/client";
 import { CATEGORIES, CAT_LABEL } from "@/lib/categories";
 
+function isHeic(file: File): boolean {
+  const t = (file.type || "").toLowerCase();
+  const n = file.name.toLowerCase();
+  return t.includes("heic") || t.includes("heif") || n.endsWith(".heic") || n.endsWith(".heif");
+}
+
+/**
+ * Convert HEIC/HEIF (default iPhone/iPad format) to JPEG in the browser so the
+ * photos display everywhere (Chrome/Android can't render HEIC). Safari decodes
+ * HEIC natively into an <img>, which we re-encode to JPEG via a canvas. No
+ * external dependency. Falls back to the original file if conversion fails.
+ * Non-HEIC files are returned untouched (no quality change).
+ */
+async function maybeConvertHeic(file: File): Promise<File> {
+  if (!isHeic(file)) return file;
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const im = new Image();
+      im.onload = () => resolve(im);
+      im.onerror = () => reject(new Error("HEIC decode not supported in this browser"));
+      im.src = url;
+    });
+    const maxDim = 3000; // generous web-quality cap
+    const ratio = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+    const w = Math.round(img.naturalWidth * ratio);
+    const h = Math.round(img.naturalHeight * ratio);
+    const canvas = document.createElement("canvas");
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return file;
+    ctx.drawImage(img, 0, 0, w, h);
+    const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/jpeg", 0.92));
+    if (!blob) return file;
+    const newName = file.name.replace(/\.[^.]+$/, "") + ".jpg";
+    return new File([blob], newName, { type: "image/jpeg" });
+  } catch {
+    return file; // fall back to original (allowlist still permits heic)
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
 /** Upload a file directly from the browser to Vercel Blob (no 4.5 MB limit). */
 async function uploadFile(file: File): Promise<string> {
-  const ext = (file.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
+  const toUpload = await maybeConvertHeic(file);
+  const ext = (toUpload.name.split(".").pop() || "jpg").toLowerCase().replace(/[^a-z0-9]/g, "");
   const pathname = `photos/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
-  const blob = await upload(pathname, file, {
+  const blob = await upload(pathname, toUpload, {
     access: "public",
     handleUploadUrl: "/api/admin/upload",
-    contentType: file.type || undefined,
+    contentType: toUpload.type || undefined,
     multipart: true, // robust for large photos
   });
   return blob.url;
