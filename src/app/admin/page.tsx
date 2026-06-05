@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { upload } from "@vercel/blob/client";
 import { CATEGORIES, CAT_LABEL } from "@/lib/categories";
 
 /**
@@ -40,18 +41,41 @@ async function normalizeImage(file: File): Promise<File> {
   }
 }
 
-/** Upload an image: normalize client-side, then POST to the server put() route. */
-async function uploadFile(file: File): Promise<string> {
-  const norm = await normalizeImage(file);
+/** Server-side put() fallback (small files only). */
+async function uploadViaServer(file: File): Promise<string> {
   const fd = new FormData();
-  fd.append("file", norm);
+  fd.append("file", file);
   const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
   if (!r.ok) {
     const d = await r.json().catch(() => ({}));
-    throw new Error(d.error || `Upload failed (HTTP ${r.status})`);
+    throw new Error(d.error || `Server upload failed (HTTP ${r.status})`);
   }
   const { url } = await r.json();
   return url as string;
+}
+
+/**
+ * Upload an image. Normalizes client-side first (HEIC->JPEG + downscale), then
+ * uploads DIRECTLY to Blob (no 4.5 MB limit). Falls back to the server put()
+ * route if the direct client upload is unavailable.
+ */
+async function uploadFile(file: File): Promise<string> {
+  const norm = await normalizeImage(file);
+  try {
+    const blob = await upload(
+      `photos/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`,
+      norm,
+      { access: "public", handleUploadUrl: "/api/admin/upload", contentType: norm.type || undefined },
+    );
+    return blob.url;
+  } catch (err) {
+    // If the normalized file is small enough, retry via the server route so a
+    // client-token hiccup doesn't block the upload entirely.
+    if (norm.size <= 4 * 1024 * 1024) {
+      return uploadViaServer(norm);
+    }
+    throw err;
+  }
 }
 
 type Photo = { file: string; w: number; h: number; cat: string; title: string; slug?: string };
