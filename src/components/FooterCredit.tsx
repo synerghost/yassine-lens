@@ -5,7 +5,7 @@ export default function FooterCredit() {
     <footer
       style={{
         position: "fixed",
-        bottom: 12,
+        bottom: 14,
         left: "50%",
         transform: "translateX(-50%)",
         zIndex: 150,
@@ -17,18 +17,18 @@ export default function FooterCredit() {
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          fontFamily: "'JetBrains Mono', monospace",
-          fontSize: 9,
-          letterSpacing: "0.14em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.22)",
+          fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+          fontSize: 10,
+          fontWeight: 300,
+          letterSpacing: "0.06em",
+          color: "rgba(255,255,255,0.38)",
           textDecoration: "none",
           pointerEvents: "auto",
           whiteSpace: "nowrap",
           transition: "color .25s ease",
         }}
-        onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
-        onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.22)")}
+        onMouseEnter={e => (e.currentTarget.style.color = "rgba(255,255,255,0.75)")}
+        onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.38)")}
       >
         Site créé par Base Studio
       </a>
