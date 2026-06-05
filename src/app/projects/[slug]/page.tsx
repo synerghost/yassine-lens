@@ -1,16 +1,11 @@
 import { notFound } from "next/navigation";
 import ProjectExperience from "@/components/ProjectExperience";
 import projectsData from "@/lib/projects.json";
+import { getProject, type Project } from "@/lib/projects";
 
-export const revalidate = 3600;
-
-type Project = {
-  cat: string;
-  title: string;
-  slug: string;
-  main: string;
-  secondaryPhotos: { file: string; w: number; h: number }[];
-};
+// Cached at the edge (ISR); admin saves call revalidatePath('/projects/<slug>')
+// for instant updates. Reads live data from Blob via getProject().
+export const revalidate = 120;
 
 export async function generateStaticParams() {
   return (projectsData as Project[]).map((p) => ({ slug: p.slug }));
@@ -18,7 +13,7 @@ export async function generateStaticParams() {
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = (projectsData as Project[]).find((p) => p.slug === slug);
+  const project = await getProject(slug);
   if (!project) notFound();
 
   const photos = project.secondaryPhotos.map((p) => ({
