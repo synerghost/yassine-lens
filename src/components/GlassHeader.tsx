@@ -1,10 +1,11 @@
 import type { CSSProperties, ReactNode } from "react";
+import Link from "next/link";
 
 /**
  * Shared liquid-glass fixed header used by Experience and ProjectExperience.
  * Children are laid out as a space-between flex row.
  */
-export default function GlassHeader({ children, style }: { children: ReactNode; style?: CSSProperties }) {
+export default function GlassHeader({ children, style, logoLink }: { children: ReactNode; style?: CSSProperties; logoLink?: boolean }) {
   return (
     <header
       style={{

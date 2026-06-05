@@ -51,9 +51,11 @@ export default function ProjectExperience({
   return (
     <>
       <GlassHeader>
-        <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
-          YASSINE&apos;S&nbsp;LENS
-        </span>
+        <Link href="/" style={{ textDecoration: "none", display: "flex" }} data-cursor="Home">
+          <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
+            YASSINE&apos;S&nbsp;LENS
+          </span>
+        </Link>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <ThemeToggle />
           <Link

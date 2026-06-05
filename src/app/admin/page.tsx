@@ -124,11 +124,47 @@ export default function AdminPage() {
     setProjectsDirty(true);
   };
 
+  const moveProject = (slug: string, dir: -1 | 1) => {
+    setProjects((ps) => {
+      const i = ps.findIndex((p) => p.slug === slug);
+      if (i < 0) return ps;
+      const j = i + dir;
+      if (j < 0 || j >= ps.length) return ps;
+      const n = [...ps];
+      [n[i], n[j]] = [n[j], n[i]];
+      return n;
+    });
+    setProjectsDirty(true);
+  };
+
   const removeSecondary = (slug: string, idx: number) => {
     setProjects((ps) => ps.map((p) => p.slug !== slug ? p : {
       ...p, secondaryPhotos: p.secondaryPhotos.filter((_, i) => i !== idx)
     }));
     setProjectsDirty(true);
+  };
+
+  const mainImageFileRef = useRef<HTMLInputElement>(null);
+  const [mainImageSlug, setMainImageSlug] = useState<string | null>(null);
+
+  const onChangeMainImage = async (slug: string, files: FileList | null) => {
+    if (!files?.length) return;
+    setProjectsBusy(true);
+    const f = files[0];
+    const dims = await readDims(f);
+    const fd = new FormData();
+    fd.append("file", f);
+    const r = await fetch("/api/admin/upload", { method: "POST", body: fd });
+    if (r.ok) {
+      const { url } = await r.json();
+      updateProject(slug, { main: url });
+      setProjectsStatus("Main image updated — save to publish.");
+    } else {
+      setProjectsStatus("Failed to upload main image.");
+    }
+    setProjectsBusy(false);
+    setMainImageSlug(null);
+    if (mainImageFileRef.current) mainImageFileRef.current.value = "";
   };
 
   const moveSecondary = (slug: string, idx: number, dir: -1 | 1) => {
@@ -294,25 +330,95 @@ export default function AdminPage() {
               <span style={{ fontSize: 12, color: "#8a8a8a" }}>{projects.length} projet(s)</span>
               {projectsStatus && <span style={{ fontSize: 12, color: "#9ad" }}>{projectsStatus}</span>}
             </div>
+            <input
+              ref={mainImageFileRef}
+              type="file"
+              accept="image/*"
+              hidden
+              onChange={(e) => mainImageSlug && onChangeMainImage(mainImageSlug, e.target.files)}
+            />
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {projects.map((proj) => (
+              {projects.map((proj, projIdx) => (
                 <div key={proj.slug} style={{ background: "#111", border: "1px solid #1f1f1f", borderRadius: 10, overflow: "hidden" }}>
                   {/* Project header row */}
-                  <button
-                    onClick={() => setExpandedSlug(expandedSlug === proj.slug ? null : proj.slug)}
-                    style={{ width: "100%", background: "none", border: "none", cursor: "pointer", padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#f2f2f2", textAlign: "left" }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={`/photos/${proj.main}`} alt={proj.title} style={{ width: 48, height: 48, objectFit: "cover", borderRadius: 6 }} />
-                      <div>
-                        <div style={{ fontSize: 14, fontWeight: 500 }}>{proj.title}</div>
-                        <div style={{ fontSize: 11, color: "#666", marginTop: 2 }}>{CAT_LABEL[proj.cat] || proj.cat} · {proj.secondaryPhotos.length} photos secondaires</div>
+                  <div style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#f2f2f2", borderBottom: expandedSlug === proj.slug ? "1px solid #1c1c1c" : "none" }}>
+                    <button
+                      onClick={() => setExpandedSlug(expandedSlug === proj.slug ? null : proj.slug)}
+                      style={{ flex: 1, background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", color: "#f2f2f2", textAlign: "left" }}
+                    >
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        {/* Main image - clickable to change */}
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setMainImageSlug(proj.slug);
+                            mainImageFileRef.current?.click();
+                          }}
+                          onMouseEnter={(e) => {
+                            const overlay = e.currentTarget.querySelector('[data-overlay]') as HTMLElement;
+                            if (overlay) overlay.style.opacity = "1";
+                          }}
+                          onMouseLeave={(e) => {
+                            const overlay = e.currentTarget.querySelector('[data-overlay]') as HTMLElement;
+                            if (overlay) overlay.style.opacity = "0";
+                          }}
+                          style={{
+                            position: "relative",
+                            width: 48,
+                            height: 48,
+                            borderRadius: 6,
+                            overflow: "hidden",
+                            cursor: "pointer",
+                            transition: "opacity .2s",
+                          }}
+                          title="Click to change main image"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={proj.main} alt={proj.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                          <div
+                            data-overlay="true"
+                            style={{
+                              position: "absolute",
+                              inset: 0,
+                              background: "rgba(0,0,0,0.4)",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              opacity: 0,
+                              transition: "opacity .2s",
+                            }}
+                          >
+                            <span style={{ fontSize: 9, color: "#fff", letterSpacing: "0.05em" }}>CHANGE</span>
+                          </div>
+                        </div>
+                        <div>
+                          <div style={{ fontSize: 14, fontWeight: 500 }}>{proj.title}</div>
+                          <div style={{ fontSize: 11, color: "#666", marginTop: 2 }}>{CAT_LABEL[proj.cat] || proj.cat} · {proj.secondaryPhotos.length} photos secondaires</div>
+                        </div>
                       </div>
+                      <span style={{ fontSize: 18, color: "#555" }}>{expandedSlug === proj.slug ? "−" : "+"}</span>
+                    </button>
+                    {/* Project reorder buttons */}
+                    <div style={{ display: "flex", gap: 4, marginLeft: 12 }}>
+                      <button
+                        onClick={() => moveProject(proj.slug, -1)}
+                        disabled={projIdx === 0}
+                        style={{ ...S.btnSmall, opacity: projIdx === 0 ? 0.3 : 1 }}
+                        title="Move project up"
+                      >
+                        ↑
+                      </button>
+                      <button
+                        onClick={() => moveProject(proj.slug, 1)}
+                        disabled={projIdx === projects.length - 1}
+                        style={{ ...S.btnSmall, opacity: projIdx === projects.length - 1 ? 0.3 : 1 }}
+                        title="Move project down"
+                      >
+                        ↓
+                      </button>
                     </div>
-                    <span style={{ fontSize: 18, color: "#555" }}>{expandedSlug === proj.slug ? "−" : "+"}</span>
-                  </button>
+                  </div>
 
                   {/* Expanded project editor */}
                   {expandedSlug === proj.slug && (

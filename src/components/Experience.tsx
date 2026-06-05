@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { Photo } from "@/lib/photos";
 import Canvas from "./Canvas";
@@ -52,9 +53,11 @@ export default function Experience({ photos }: { photos: Photo[] }) {
       </h1>
 
       <GlassHeader>
-        <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
-          YASSINE&apos;S&nbsp;LENS
-        </span>
+        <Link href="/" style={{ textDecoration: "none", display: "flex" }} data-cursor="Home">
+          <span style={{ fontSize: 13, letterSpacing: "0.26em", fontWeight: 400, color: "var(--fg)" }}>
+            YASSINE&apos;S&nbsp;LENS
+          </span>
+        </Link>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <ThemeToggle />
           <button
