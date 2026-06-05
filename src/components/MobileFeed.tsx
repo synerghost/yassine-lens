@@ -31,11 +31,7 @@ export default function MobileFeed({ photos, noCap }: { photos: Photo[]; noCap?:
   return (
     <div
       ref={gyroRef}
-      style={{
-        willChange: "transform",
-        transition: "transform 0.05s linear",
-        overflow: "hidden",
-      }}
+      style={{ willChange: "transform" }}
     >
     <div ref={ref} style={{ padding: "80px 0 160px", position: "relative" }}>
       {photos.map((p, i) => {
