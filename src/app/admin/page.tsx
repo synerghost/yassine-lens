@@ -26,7 +26,7 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [tab, setTab] = useState<"gallery" | "projects">("gallery");
+  const [tab, setTab] = useState<"gallery" | "projects">("projects");
 
   // Gallery state
   const [photos, setPhotos] = useState<Photo[]>([]);
@@ -43,6 +43,12 @@ export default function AdminPage() {
   const [expandedSlug, setExpandedSlug] = useState<string | null>(null);
   const secondaryFileRef = useRef<HTMLInputElement>(null);
   const [uploadingSlug, setUploadingSlug] = useState<string | null>(null);
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [draggedProjectSlug, setDraggedProjectSlug] = useState<string | null>(null);
+  const mainImageFileRef = useRef<HTMLInputElement>(null);
+  const [mainImageSlug, setMainImageSlug] = useState<string | null>(null);
+  const [showNewProjectForm, setShowNewProjectForm] = useState(false);
+  const [newProjectData, setNewProjectData] = useState({ title: "", cat: "sports" });
 
   const loadSession = async () => {
     const r = await fetch("/api/admin/session", { cache: "no-store" }).then((x) => x.json());
@@ -124,28 +130,12 @@ export default function AdminPage() {
     setProjectsDirty(true);
   };
 
-  const moveProject = (slug: string, dir: -1 | 1) => {
-    setProjects((ps) => {
-      const i = ps.findIndex((p) => p.slug === slug);
-      if (i < 0) return ps;
-      const j = i + dir;
-      if (j < 0 || j >= ps.length) return ps;
-      const n = [...ps];
-      [n[i], n[j]] = [n[j], n[i]];
-      return n;
-    });
-    setProjectsDirty(true);
-  };
-
   const removeSecondary = (slug: string, idx: number) => {
     setProjects((ps) => ps.map((p) => p.slug !== slug ? p : {
       ...p, secondaryPhotos: p.secondaryPhotos.filter((_, i) => i !== idx)
     }));
     setProjectsDirty(true);
   };
-
-  const mainImageFileRef = useRef<HTMLInputElement>(null);
-  const [mainImageSlug, setMainImageSlug] = useState<string | null>(null);
 
   const onChangeMainImage = async (slug: string, files: FileList | null) => {
     if (!files?.length) return;
@@ -167,16 +157,33 @@ export default function AdminPage() {
     if (mainImageFileRef.current) mainImageFileRef.current.value = "";
   };
 
-  const moveSecondary = (slug: string, idx: number, dir: -1 | 1) => {
+  // Drag & Drop for secondary photos
+  const handleDragStart = (e: React.DragEvent, projSlug: string, idx: number) => {
+    setDraggedIndex(idx);
+    setDraggedProjectSlug(projSlug);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+  };
+
+  const handleDrop = (e: React.DragEvent, projSlug: string, dropIdx: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedProjectSlug !== projSlug) return;
+    if (draggedIndex === dropIdx) { setDraggedIndex(null); return; }
+
     setProjects((ps) => ps.map((p) => {
-      if (p.slug !== slug) return p;
+      if (p.slug !== projSlug) return p;
       const arr = [...p.secondaryPhotos];
-      const j = idx + dir;
-      if (j < 0 || j >= arr.length) return p;
-      [arr[idx], arr[j]] = [arr[j], arr[idx]];
+      const [item] = arr.splice(draggedIndex!, 1);
+      arr.splice(dropIdx, 0, item);
       return { ...p, secondaryPhotos: arr };
     }));
     setProjectsDirty(true);
+    setDraggedIndex(null);
+    setDraggedProjectSlug(null);
   };
 
   const onAddSecondary = async (slug: string, files: FileList | null) => {
@@ -210,13 +217,13 @@ export default function AdminPage() {
   // ── Styles ───────────────────────────────────────────────────────────────────
   const S = {
     page: { minHeight: "100vh", background: "#0a0a0a", color: "#f2f2f2", fontFamily: "Inter, system-ui, sans-serif", cursor: "auto" } as React.CSSProperties,
-    wrap: { maxWidth: 1100, margin: "0 auto", padding: "40px 24px 100px" } as React.CSSProperties,
-    label: { fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase" as const, color: "#8a8a8a" },
-    input: { background: "#141414", border: "1px solid #262626", color: "#f2f2f2", borderRadius: 8, padding: "10px 12px", fontSize: 14, width: "100%", outline: "none" } as React.CSSProperties,
-    textarea: { background: "#141414", border: "1px solid #262626", color: "#f2f2f2", borderRadius: 8, padding: "10px 12px", fontSize: 13, width: "100%", outline: "none", resize: "vertical" as const, minHeight: 72, fontFamily: "inherit" } as React.CSSProperties,
-    btn: { background: "#fff", color: "#000", border: "none", borderRadius: 999, padding: "11px 22px", fontSize: 13, fontWeight: 500, cursor: "pointer" } as React.CSSProperties,
-    btnGhost: { background: "transparent", color: "#f2f2f2", border: "1px solid #2a2a2a", borderRadius: 999, padding: "9px 18px", fontSize: 12, cursor: "pointer" } as React.CSSProperties,
-    btnSmall: { background: "rgba(255,255,255,0.07)", color: "#f2f2f2", border: "1px solid #2a2a2a", borderRadius: 6, padding: "6px 10px", fontSize: 11, cursor: "pointer" } as React.CSSProperties,
+    wrap: { maxWidth: "100%", margin: "0 auto", padding: "16px" } as React.CSSProperties,
+    label: { fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase" as const, color: "#8a8a8a", marginBottom: 6, display: "block" },
+    input: { background: "#141414", border: "1px solid #262626", color: "#f2f2f2", borderRadius: 8, padding: "12px 14px", fontSize: 16, width: "100%", outline: "none" } as React.CSSProperties,
+    textarea: { background: "#141414", border: "1px solid #262626", color: "#f2f2f2", borderRadius: 8, padding: "12px 14px", fontSize: 16, width: "100%", outline: "none", resize: "vertical" as const, minHeight: 100, fontFamily: "inherit" } as React.CSSProperties,
+    btn: { background: "#fff", color: "#000", border: "none", borderRadius: 10, padding: "14px 20px", fontSize: 14, fontWeight: 500, cursor: "pointer", minHeight: 48, minWidth: 120, transition: "opacity .2s" } as React.CSSProperties,
+    btnSecondary: { background: "#1a1a1a", color: "#f2f2f2", border: "1px solid #2a2a2a", borderRadius: 10, padding: "12px 18px", fontSize: 13, cursor: "pointer", minHeight: 44, transition: "background .2s" } as React.CSSProperties,
+    btnSmall: { background: "rgba(255,255,255,0.1)", color: "#f2f2f2", border: "1px solid #2a2a2a", borderRadius: 6, padding: "8px 12px", fontSize: 12, cursor: "pointer", minHeight: 40 } as React.CSSProperties,
   };
 
   if (state === "loading") return <div style={{ ...S.page, display: "grid", placeItems: "center" }}>Loading…</div>;
@@ -224,20 +231,20 @@ export default function AdminPage() {
   if (state === "login") {
     return (
       <div style={{ ...S.page, display: "grid", placeItems: "center" }}>
-        <form onSubmit={login} style={{ width: 320, display: "flex", flexDirection: "column", gap: 16 }}>
+        <form onSubmit={login} style={{ width: "90%", maxWidth: 380, display: "flex", flexDirection: "column", gap: 18 }}>
           <div style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 16, letterSpacing: "0.22em" }}>YASSINE&apos;S&nbsp;LENS</div>
-            <div style={{ ...S.label, marginTop: 6 }}>Admin</div>
+            <div style={{ fontSize: 24, letterSpacing: "0.22em", marginBottom: 8 }}>YASSINE&apos;S&nbsp;LENS</div>
+            <div style={{ fontSize: 12, letterSpacing: "0.1em", color: "#8a8a8a" }}>Admin Panel</div>
           </div>
           {!configured && (
-            <p style={{ fontSize: 12, color: "#e0a", lineHeight: 1.6 }}>
-              ⚠️ <code>ADMIN_PASSWORD</code> n&apos;est pas défini dans Vercel.
+            <p style={{ fontSize: 13, color: "#e0a", lineHeight: 1.6, background: "rgba(224, 0, 170, 0.1)", padding: 12, borderRadius: 8 }}>
+              ⚠️ <code>ADMIN_PASSWORD</code> not configured.
             </p>
           )}
-          <input type="text" placeholder="Identifiant" value={username} onChange={(e) => setUsername(e.target.value)} style={S.input} autoFocus autoComplete="username" />
-          <input type="password" placeholder="Mot de passe" value={password} onChange={(e) => setPassword(e.target.value)} style={S.input} autoComplete="current-password" />
-          {error && <p style={{ fontSize: 12, color: "#ff6b6b" }}>{error}</p>}
-          <button type="submit" style={S.btn}>Se connecter</button>
+          <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} style={S.input} autoFocus autoComplete="username" />
+          <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} style={S.input} autoComplete="current-password" />
+          {error && <p style={{ fontSize: 13, color: "#ff6b6b" }}>{error}</p>}
+          <button type="submit" style={S.btn}>Sign in</button>
         </form>
       </div>
     );
@@ -247,89 +254,86 @@ export default function AdminPage() {
     <div style={S.page}>
       <div style={S.wrap}>
         {/* Header */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16, marginBottom: 24 }}>
-          <div>
-            <div style={{ fontSize: 18, letterSpacing: "0.2em" }}>YASSINE&apos;S&nbsp;LENS</div>
-            <div style={S.label}>Gestion du contenu</div>
-          </div>
-          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
-            <a href="/" target="_blank" rel="noreferrer" style={S.btnGhost}>Voir le site ↗</a>
-            <button onClick={logout} style={S.btnGhost}>Déconnexion</button>
+        <div style={{ marginBottom: 24, paddingBottom: 16, borderBottom: "1px solid #1c1c1c" }}>
+          <div style={{ fontSize: 20, letterSpacing: "0.2em", marginBottom: 2 }}>YASSINE&apos;S&nbsp;LENS</div>
+          <div style={{ fontSize: 12, color: "#8a8a8a", marginBottom: 16 }}>Content Manager</div>
+          <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <a href="/" target="_blank" rel="noreferrer" style={{ ...S.btnSecondary, textDecoration: "none" }}>View site ↗</a>
+            <button onClick={logout} style={S.btnSecondary}>Sign out</button>
           </div>
         </div>
 
         {!blobOk && (
           <p style={{ fontSize: 13, color: "#ffcf6b", background: "#1a1407", border: "1px solid #3a2e10", padding: "12px 14px", borderRadius: 8, marginBottom: 20, lineHeight: 1.6 }}>
-            ⚠️ <strong>BLOB_READ_WRITE_TOKEN manquant.</strong> Upload/sauvegarde désactivés.<br/>
+            ⚠️ <strong>BLOB_READ_WRITE_TOKEN missing.</strong> Upload disabled.<br/>
             <small style={{ marginTop: 6, display: "block", opacity: 0.8 }}>
-              Vercel Settings → Environment Variables → Ajoute <code>BLOB_READ_WRITE_TOKEN</code> (copié du dashboard Blob) → Redéploie.
+              Configure in Vercel → Environment Variables.
             </small>
           </p>
         )}
 
         {/* Tabs */}
-        <div style={{ display: "flex", gap: 4, marginBottom: 24, borderBottom: "1px solid #1c1c1c", paddingBottom: 0 }}>
-          {(["gallery", "projects"] as const).map((t) => (
+        <div style={{ display: "flex", gap: 0, marginBottom: 20, borderBottom: "2px solid #1c1c1c", WebkitOverflowScrolling: "touch", overflowX: "auto" }}>
+          {(["projects", "gallery"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)} style={{
-              background: "none", border: "none", color: tab === t ? "#f2f2f2" : "#555",
-              fontSize: 13, padding: "10px 18px", cursor: "pointer",
-              borderBottom: tab === t ? "2px solid #f2f2f2" : "2px solid transparent",
-              marginBottom: -1, transition: "color .2s",
-              fontWeight: tab === t ? 500 : 400,
+              background: "none", border: "none", color: tab === t ? "#fff" : "#666",
+              fontSize: 14, padding: "12px 20px", cursor: "pointer",
+              borderBottom: tab === t ? "3px solid #fff" : "none",
+              marginBottom: -2, transition: "color .2s", whiteSpace: "nowrap", fontWeight: tab === t ? 600 : 400,
             }}>
-              {t === "gallery" ? "Galerie homepage" : "Projets"}
+              {t === "gallery" ? "Gallery" : "Projects"}
             </button>
           ))}
         </div>
 
-        {/* ── GALLERY TAB ────────────────────────────────────────────────────── */}
-        {tab === "gallery" && (
+        {/* ── PROJECTS TAB ───────────────────────────────────────────────────── */}
+        {tab === "projects" && (
           <>
-            <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", position: "sticky", top: 0, background: "#0a0a0a", padding: "14px 0", zIndex: 5, borderBottom: "1px solid #1c1c1c", marginBottom: 16 }}>
-              <button style={S.btn} onClick={() => galleryFileRef.current?.click()} disabled={galleryBusy}>+ Ajouter des photos</button>
-              <input ref={galleryFileRef} type="file" accept="image/*" multiple hidden onChange={(e) => onAddPhotos(e.target.files)} />
-              <button style={{ ...S.btn, opacity: galleryDirty ? 1 : 0.4 }} onClick={saveGallery} disabled={galleryBusy || !galleryDirty}>
-                Enregistrer{galleryDirty ? " *" : ""}
+            <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", position: "sticky", top: 0, background: "#0a0a0a", paddingTop: 8, paddingBottom: 8, zIndex: 10 }}>
+              <button style={{ ...S.btn, opacity: projectsDirty ? 1 : 0.5 }} onClick={saveProjects} disabled={projectsBusy || !projectsDirty}>
+                {projectsDirty ? "✓ Save Changes" : "All Saved"}
               </button>
-              <span style={{ fontSize: 12, color: "#8a8a8a" }}>{photos.length} photo(s)</span>
-              {galleryStatus && <span style={{ fontSize: 12, color: "#9ad" }}>{galleryStatus}</span>}
+              <button style={S.btnSecondary} onClick={() => setShowNewProjectForm(!showNewProjectForm)}>
+                {showNewProjectForm ? "Cancel" : "+ New Project"}
+              </button>
+              <span style={{ fontSize: 12, color: "#8a8a8a", alignSelf: "center" }}>{projects.length} projects</span>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 14 }}>
-              {photos.map((p, i) => (
-                <div key={p.file + i} style={{ background: "#111", border: "1px solid #1f1f1f", borderRadius: 10, overflow: "hidden" }}>
-                  <div style={{ position: "relative", aspectRatio: "4/3", background: "#000" }}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={p.file} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    <button onClick={() => removePhoto(i)} style={{ position: "absolute", top: 6, right: 6, width: 26, height: 26, borderRadius: "50%", background: "rgba(0,0,0,0.7)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)", cursor: "pointer", fontSize: 14 }}>×</button>
-                    <div style={{ position: "absolute", top: 6, left: 6, display: "flex", gap: 4 }}>
-                      <button onClick={() => movePhoto(i, -1)} style={S.btnSmall}>↑</button>
-                      <button onClick={() => movePhoto(i, 1)} style={S.btnSmall}>↓</button>
-                    </div>
+            {projectsStatus && (
+              <div style={{ background: "#1a1a2e", border: "1px solid #2a3a5e", color: "#9ad", padding: 12, borderRadius: 8, marginBottom: 16, fontSize: 13 }}>
+                {projectsStatus}
+              </div>
+            )}
+
+            {/* New Project Form */}
+            {showNewProjectForm && (
+              <div style={{ background: "#111", border: "1px solid #2a2a2a", borderRadius: 10, padding: 18, marginBottom: 18 }}>
+                <h3 style={{ margin: "0 0 16px 0", fontSize: 16 }}>Create New Project</h3>
+                <div style={{ display: "grid", gap: 12 }}>
+                  <div>
+                    <label style={S.label}>Project Title</label>
+                    <input
+                      value={newProjectData.title}
+                      onChange={(e) => setNewProjectData({ ...newProjectData, title: e.target.value })}
+                      placeholder="e.g., Lboulevard Festival"
+                      style={S.input}
+                    />
                   </div>
-                  <div style={{ padding: 10, display: "flex", flexDirection: "column", gap: 7 }}>
-                    <input value={p.title} onChange={(e) => updatePhoto(i, { title: e.target.value })} placeholder="Titre" style={{ ...S.input, padding: "7px 10px", fontSize: 12 }} />
-                    <select value={p.cat} onChange={(e) => updatePhoto(i, { cat: e.target.value })} style={{ ...S.input, padding: "7px 10px", fontSize: 12, cursor: "pointer" }}>
+                  <div>
+                    <label style={S.label}>Category</label>
+                    <select
+                      value={newProjectData.cat}
+                      onChange={(e) => setNewProjectData({ ...newProjectData, cat: e.target.value })}
+                      style={S.input}
+                    >
                       {CATEGORIES.map((c) => <option key={c} value={c}>{CAT_LABEL[c]}</option>)}
                     </select>
                   </div>
                 </div>
-              ))}
-            </div>
-            {photos.length === 0 && <p style={{ color: "#8a8a8a", marginTop: 40, textAlign: "center" }}>Aucune photo. Clique « + Ajouter des photos ».</p>}
-          </>
-        )}
+                <p style={{ fontSize: 12, color: "#8a8a8a", marginTop: 12 }}>You'll be able to upload images after creating the project.</p>
+              </div>
+            )}
 
-        {/* ── PROJECTS TAB ───────────────────────────────────────────────────── */}
-        {tab === "projects" && (
-          <>
-            <div style={{ display: "flex", gap: 14, alignItems: "center", flexWrap: "wrap", position: "sticky", top: 0, background: "#0a0a0a", padding: "14px 0", zIndex: 5, borderBottom: "1px solid #1c1c1c", marginBottom: 16 }}>
-              <button style={{ ...S.btn, opacity: projectsDirty ? 1 : 0.4 }} onClick={saveProjects} disabled={projectsBusy || !projectsDirty}>
-                Enregistrer les projets{projectsDirty ? " *" : ""}
-              </button>
-              <span style={{ fontSize: 12, color: "#8a8a8a" }}>{projects.length} projet(s)</span>
-              {projectsStatus && <span style={{ fontSize: 12, color: "#9ad" }}>{projectsStatus}</span>}
-            </div>
             <input
               ref={mainImageFileRef}
               type="file"
@@ -337,139 +341,213 @@ export default function AdminPage() {
               hidden
               onChange={(e) => mainImageSlug && onChangeMainImage(mainImageSlug, e.target.files)}
             />
+            <input
+              ref={secondaryFileRef}
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              onChange={(e) => uploadingSlug && onAddSecondary(uploadingSlug, e.target.files)}
+            />
 
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {projects.map((proj, projIdx) => (
-                <div key={proj.slug} style={{ background: "#111", border: "1px solid #1f1f1f", borderRadius: 10, overflow: "hidden" }}>
-                  {/* Project header row */}
-                  <div style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", color: "#f2f2f2", borderBottom: expandedSlug === proj.slug ? "1px solid #1c1c1c" : "none" }}>
-                    <button
-                      onClick={() => setExpandedSlug(expandedSlug === proj.slug ? null : proj.slug)}
-                      style={{ flex: 1, background: "none", border: "none", cursor: "pointer", padding: 0, display: "flex", justifyContent: "space-between", alignItems: "center", color: "#f2f2f2", textAlign: "left" }}
+            <div style={{ display: "grid", gap: 12 }}>
+              {projects.map((proj) => (
+                <div key={proj.slug} style={{ background: "#111", border: "1px solid #1f1f1f", borderRadius: 12, overflow: "hidden" }}>
+                  {/* Project header - fully tappable */}
+                  <div
+                    onClick={() => setExpandedSlug(expandedSlug === proj.slug ? null : proj.slug)}
+                    style={{
+                      padding: 16,
+                      display: "flex",
+                      gap: 14,
+                      alignItems: "center",
+                      cursor: "pointer",
+                      borderBottom: expandedSlug === proj.slug ? "1px solid #1c1c1c" : "none",
+                      transition: "background .2s",
+                    }}
+                    onTouchStart={(e) => e.currentTarget.style.background = "#1a1a1a"}
+                    onTouchEnd={(e) => e.currentTarget.style.background = "transparent"}
+                  >
+                    {/* Main image - large and tappable */}
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMainImageSlug(proj.slug);
+                        mainImageFileRef.current?.click();
+                      }}
+                      style={{
+                        position: "relative",
+                        width: 80,
+                        height: 80,
+                        borderRadius: 8,
+                        overflow: "hidden",
+                        flexShrink: 0,
+                        cursor: "pointer",
+                        border: "2px solid #2a2a2a",
+                      }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        {/* Main image - clickable to change */}
-                        <div
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setMainImageSlug(proj.slug);
-                            mainImageFileRef.current?.click();
-                          }}
-                          onMouseEnter={(e) => {
-                            const overlay = e.currentTarget.querySelector('[data-overlay]') as HTMLElement;
-                            if (overlay) overlay.style.opacity = "1";
-                          }}
-                          onMouseLeave={(e) => {
-                            const overlay = e.currentTarget.querySelector('[data-overlay]') as HTMLElement;
-                            if (overlay) overlay.style.opacity = "0";
-                          }}
-                          style={{
-                            position: "relative",
-                            width: 48,
-                            height: 48,
-                            borderRadius: 6,
-                            overflow: "hidden",
-                            cursor: "pointer",
-                            transition: "opacity .2s",
-                          }}
-                          title="Click to change main image"
-                        >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={proj.main} alt={proj.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                          <div
-                            data-overlay="true"
-                            style={{
-                              position: "absolute",
-                              inset: 0,
-                              background: "rgba(0,0,0,0.4)",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              opacity: 0,
-                              transition: "opacity .2s",
-                            }}
-                          >
-                            <span style={{ fontSize: 9, color: "#fff", letterSpacing: "0.05em" }}>CHANGE</span>
-                          </div>
-                        </div>
-                        <div>
-                          <div style={{ fontSize: 14, fontWeight: 500 }}>{proj.title}</div>
-                          <div style={{ fontSize: 11, color: "#666", marginTop: 2 }}>{CAT_LABEL[proj.cat] || proj.cat} · {proj.secondaryPhotos.length} photos secondaires</div>
-                        </div>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={proj.main} alt={proj.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                      <div
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          background: "rgba(0,0,0,0.5)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          opacity: 0,
+                          transition: "opacity .2s",
+                        }}
+                        onTouchStart={(e) => (e.currentTarget.style.opacity = "1")}
+                        onTouchEnd={(e) => (e.currentTarget.style.opacity = "0")}
+                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
+                      >
+                        <span style={{ fontSize: 11, color: "#fff", fontWeight: 600, letterSpacing: "0.08em" }}>TAP TO CHANGE</span>
                       </div>
-                      <span style={{ fontSize: 18, color: "#555" }}>{expandedSlug === proj.slug ? "−" : "+"}</span>
-                    </button>
-                    {/* Project reorder buttons */}
-                    <div style={{ display: "flex", gap: 4, marginLeft: 12 }}>
-                      <button
-                        onClick={() => moveProject(proj.slug, -1)}
-                        disabled={projIdx === 0}
-                        style={{ ...S.btnSmall, opacity: projIdx === 0 ? 0.3 : 1 }}
-                        title="Move project up"
-                      >
-                        ↑
-                      </button>
-                      <button
-                        onClick={() => moveProject(proj.slug, 1)}
-                        disabled={projIdx === projects.length - 1}
-                        style={{ ...S.btnSmall, opacity: projIdx === projects.length - 1 ? 0.3 : 1 }}
-                        title="Move project down"
-                      >
-                        ↓
-                      </button>
                     </div>
+
+                    {/* Project info */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 style={{ margin: 0, fontSize: 16, fontWeight: 500, marginBottom: 4 }}>{proj.title}</h3>
+                      <p style={{ margin: 0, fontSize: 13, color: "#8a8a8a" }}>
+                        {CAT_LABEL[proj.cat]} · {proj.secondaryPhotos.length} photos
+                      </p>
+                    </div>
+
+                    <span style={{ fontSize: 24, color: "#555", marginLeft: 8 }}>
+                      {expandedSlug === proj.slug ? "−" : "+"}
+                    </span>
                   </div>
 
                   {/* Expanded project editor */}
                   {expandedSlug === proj.slug && (
-                    <div style={{ padding: "0 18px 18px", borderTop: "1px solid #1c1c1c" }}>
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 14 }}>
-                        <div>
-                          <div style={S.label}>Titre</div>
-                          <input value={proj.title} onChange={(e) => updateProject(proj.slug, { title: e.target.value })} style={{ ...S.input, marginTop: 6 }} />
-                        </div>
-                        <div>
-                          <div style={S.label}>Instagram client (@handle)</div>
-                          <input value={proj.instagram} placeholder="@handle" onChange={(e) => updateProject(proj.slug, { instagram: e.target.value })} style={{ ...S.input, marginTop: 6 }} />
-                        </div>
-                      </div>
-                      <div style={{ marginTop: 12 }}>
-                        <div style={S.label}>Description</div>
-                        <textarea value={proj.description} onChange={(e) => updateProject(proj.slug, { description: e.target.value })} style={{ ...S.textarea, marginTop: 6 }} />
+                    <div style={{ padding: 16, borderTop: "1px solid #1c1c1c", display: "grid", gap: 16 }}>
+                      {/* Title */}
+                      <div>
+                        <label style={S.label}>Project Title</label>
+                        <input
+                          value={proj.title}
+                          onChange={(e) => updateProject(proj.slug, { title: e.target.value })}
+                          style={S.input}
+                        />
                       </div>
 
-                      {/* Secondary photos */}
-                      <div style={{ marginTop: 18 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                          <div style={S.label}>Photos secondaires ({proj.secondaryPhotos.length})</div>
-                          <button style={S.btn} onClick={() => { setUploadingSlug(proj.slug); secondaryFileRef.current?.click(); }} disabled={projectsBusy}>
-                            + Ajouter des photos
+                      {/* Instagram */}
+                      <div>
+                        <label style={S.label}>Client Instagram (@handle)</label>
+                        <input
+                          value={proj.instagram}
+                          placeholder="@username"
+                          onChange={(e) => updateProject(proj.slug, { instagram: e.target.value })}
+                          style={S.input}
+                        />
+                      </div>
+
+                      {/* Description */}
+                      <div>
+                        <label style={S.label}>Description</label>
+                        <textarea
+                          value={proj.description}
+                          onChange={(e) => updateProject(proj.slug, { description: e.target.value })}
+                          placeholder="Add project details..."
+                          style={S.textarea}
+                        />
+                      </div>
+
+                      {/* Secondary photos with drag & drop */}
+                      <div>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                          <label style={{ ...S.label, marginBottom: 0 }}>Gallery Photos ({proj.secondaryPhotos.length})</label>
+                          <button
+                            style={S.btnSmall}
+                            onClick={() => { setUploadingSlug(proj.slug); secondaryFileRef.current?.click(); }}
+                            disabled={projectsBusy}
+                          >
+                            + Add Photos
                           </button>
                         </div>
-                        <input
-                          ref={secondaryFileRef}
-                          type="file" accept="image/*" multiple hidden
-                          onChange={(e) => uploadingSlug && onAddSecondary(uploadingSlug, e.target.files)}
-                        />
-                        {uploadingSlug === proj.slug && projectsBusy && <p style={{ fontSize: 12, color: "#9ad" }}>{projectsStatus}</p>}
 
-                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: 8 }}>
-                          {proj.secondaryPhotos.map((sp, si) => (
-                            <div key={sp.file + si} style={{ position: "relative", aspectRatio: `${sp.w}/${sp.h}`, background: "#000", borderRadius: 6, overflow: "hidden" }}>
-                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                              <img src={sp.file} alt="" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                              <div style={{ position: "absolute", top: 0, left: 0, right: 0, display: "flex", justifyContent: "space-between", padding: 4, background: "linear-gradient(to bottom, rgba(0,0,0,0.5), transparent)" }}>
-                                <div style={{ display: "flex", gap: 3 }}>
-                                  <button onClick={() => moveSecondary(proj.slug, si, -1)} style={{ ...S.btnSmall, padding: "3px 6px" }}>↑</button>
-                                  <button onClick={() => moveSecondary(proj.slug, si, 1)} style={{ ...S.btnSmall, padding: "3px 6px" }}>↓</button>
+                        {uploadingSlug === proj.slug && projectsBusy && (
+                          <p style={{ fontSize: 12, color: "#9ad", marginBottom: 12 }}>{projectsStatus}</p>
+                        )}
+
+                        {proj.secondaryPhotos.length > 0 ? (
+                          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
+                            {proj.secondaryPhotos.map((sp, si) => (
+                              <div
+                                key={sp.file + si}
+                                draggable
+                                onDragStart={(e) => handleDragStart(e, proj.slug, si)}
+                                onDragOver={handleDragOver}
+                                onDrop={(e) => handleDrop(e, proj.slug, si)}
+                                style={{
+                                  position: "relative",
+                                  aspectRatio: `${sp.w}/${sp.h}`,
+                                  background: "#000",
+                                  borderRadius: 8,
+                                  overflow: "hidden",
+                                  cursor: "grab",
+                                  opacity: draggedIndex === si && draggedProjectSlug === proj.slug ? 0.5 : 1,
+                                  transition: "opacity .2s",
+                                  border: draggedIndex === si && draggedProjectSlug === proj.slug ? "2px dashed #fff" : "1px solid #2a2a2a",
+                                }}
+                              >
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img src={sp.file} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", pointerEvents: "none" }} />
+
+                                {/* Drag indicator */}
+                                <div style={{
+                                  position: "absolute",
+                                  top: 0,
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  background: "rgba(0,0,0,0.4)",
+                                  opacity: 0,
+                                  transition: "opacity .2s",
+                                  fontSize: 28,
+                                  color: "#fff",
+                                }}
+                                onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
+                                onMouseLeave={(e) => (e.currentTarget.style.opacity = "0")}
+                                >
+                                  ≡
                                 </div>
-                                <button onClick={() => removeSecondary(proj.slug, si)} style={{ ...S.btnSmall, padding: "3px 6px" }}>×</button>
+
+                                {/* Delete button */}
+                                <button
+                                  onClick={() => removeSecondary(proj.slug, si)}
+                                  style={{
+                                    position: "absolute",
+                                    top: 6,
+                                    right: 6,
+                                    width: 36,
+                                    height: 36,
+                                    borderRadius: "50%",
+                                    background: "rgba(0,0,0,0.6)",
+                                    color: "#fff",
+                                    border: "1px solid rgba(255,255,255,0.2)",
+                                    cursor: "pointer",
+                                    fontSize: 18,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    minWidth: 36,
+                                    minHeight: 36,
+                                  }}
+                                >
+                                  ×
+                                </button>
                               </div>
-                            </div>
-                          ))}
-                        </div>
-                        {proj.secondaryPhotos.length === 0 && (
-                          <p style={{ fontSize: 12, color: "#555", textAlign: "center", padding: "20px 0" }}>Aucune photo secondaire.</p>
+                            ))}
+                          </div>
+                        ) : (
+                          <p style={{ fontSize: 13, color: "#666", textAlign: "center", padding: "20px 0" }}>No gallery photos. Add some to get started.</p>
                         )}
                       </div>
                     </div>
@@ -477,8 +555,60 @@ export default function AdminPage() {
                 </div>
               ))}
             </div>
+
+            {projects.length === 0 && (
+              <div style={{ textAlign: "center", padding: "40px 20px" }}>
+                <p style={{ color: "#8a8a8a", fontSize: 14 }}>No projects yet. Create one to get started.</p>
+              </div>
+            )}
           </>
         )}
+
+        {/* ── GALLERY TAB ────────────────────────────────────────────────────── */}
+        {tab === "gallery" && (
+          <>
+            <div style={{ display: "flex", gap: 10, marginBottom: 20, flexWrap: "wrap", position: "sticky", top: 0, background: "#0a0a0a", paddingTop: 8, paddingBottom: 8, zIndex: 10 }}>
+              <button style={S.btn} onClick={() => galleryFileRef.current?.click()} disabled={galleryBusy}>+ Add Photos</button>
+              <button style={{ ...S.btn, opacity: galleryDirty ? 1 : 0.5 }} onClick={saveGallery} disabled={galleryBusy || !galleryDirty}>
+                {galleryDirty ? "✓ Save Changes" : "All Saved"}
+              </button>
+              <span style={{ fontSize: 12, color: "#8a8a8a", alignSelf: "center" }}>{photos.length} photos</span>
+            </div>
+
+            {galleryStatus && (
+              <div style={{ background: "#1a1a2e", border: "1px solid #2a3a5e", color: "#9ad", padding: 12, borderRadius: 8, marginBottom: 16, fontSize: 13 }}>
+                {galleryStatus}
+              </div>
+            )}
+
+            <input ref={galleryFileRef} type="file" accept="image/*" multiple hidden onChange={(e) => onAddPhotos(e.target.files)} />
+
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))", gap: 12 }}>
+              {photos.map((p, i) => (
+                <div key={p.file + i} style={{ background: "#111", border: "1px solid #1f1f1f", borderRadius: 10, overflow: "hidden" }}>
+                  <div style={{ position: "relative", aspectRatio: "4/3", background: "#000" }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={p.file} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <button onClick={() => removePhoto(i)} style={{ position: "absolute", top: 6, right: 6, width: 36, height: 36, borderRadius: "50%", background: "rgba(0,0,0,0.7)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)", cursor: "pointer", fontSize: 16, minHeight: 36, minWidth: 36 }}>×</button>
+                    <div style={{ position: "absolute", top: 6, left: 6, display: "flex", gap: 4 }}>
+                      <button onClick={() => movePhoto(i, -1)} style={{ ...S.btnSmall, padding: "6px 8px" }}>↑</button>
+                      <button onClick={() => movePhoto(i, 1)} style={{ ...S.btnSmall, padding: "6px 8px" }}>↓</button>
+                    </div>
+                  </div>
+                  <div style={{ padding: 10, display: "grid", gap: 6 }}>
+                    <input value={p.title} onChange={(e) => updatePhoto(i, { title: e.target.value })} placeholder="Title" style={{ ...S.input, padding: "8px 10px", fontSize: 13 }} />
+                    <select value={p.cat} onChange={(e) => updatePhoto(i, { cat: e.target.value })} style={{ ...S.input, padding: "8px 10px", fontSize: 13, cursor: "pointer" }}>
+                      {CATEGORIES.map((c) => <option key={c} value={c}>{CAT_LABEL[c]}</option>)}
+                    </select>
+                  </div>
+                </div>
+              ))}
+            </div>
+            {photos.length === 0 && <p style={{ color: "#8a8a8a", marginTop: 40, textAlign: "center", fontSize: 14 }}>No photos. Add some to get started.</p>}
+          </>
+        )}
+
+        <div style={{ height: 60 }} />
       </div>
     </div>
   );
