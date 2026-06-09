@@ -67,7 +67,7 @@ export default function ContactPage() {
                 Instagram
               </label>
               <a
-                href="https://instagram.com/yasineslenss"
+                href="https://www.instagram.com/yasines_lens/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -77,7 +77,7 @@ export default function ContactPage() {
                   textDecorationColor: "rgba(var(--fg-rgb), 0.2)",
                 }}
               >
-                @yasineslenss
+                @yasines_lens
               </a>
             </div>
 
