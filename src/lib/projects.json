@@ -41,7 +41,7 @@
       }
     ],
     "instagram": "",
-    "description": "L'Boulevard Festival, le rendez-vous incontournable de la sc\u00e8ne rock et m\u00e9tal marocaine."
+    "description": "L'Boulevard Festival, le rendez-vous incontournable de la scène rock et métal marocaine."
   },
   {
     "cat": "music",
@@ -144,8 +144,8 @@
         "h": 1000
       }
     ],
-    "instagram": "",
-    "description": "MOGA Festival \u2014 ambiance \u00e9lectronique au bord de l'Atlantique \u00e0 Essaouira."
+    "instagram": "mogafestival",
+    "description": "MOGA Festival — ambiance électronique au bord de l'Atlantique à Essaouira."
   },
   {
     "cat": "music",
@@ -194,8 +194,8 @@
         "h": 1500
       }
     ],
-    "instagram": "",
-    "description": "OVUL Festival \u2014 \u00e9nergie et cr\u00e9ativit\u00e9 de la sc\u00e8ne musicale \u00e9mergente marocaine."
+    "instagram": "ovul.sphere",
+    "description": "OVUL Festival — énergie et créativité de la scène musicale émergente marocaine."
   },
   {
     "cat": "music",
@@ -298,8 +298,8 @@
         "h": 1500
       }
     ],
-    "instagram": "",
-    "description": "Talguitart Festival \u2014 musique et art en plein air dans l'Atlas marocain."
+    "instagram": "talguitart",
+    "description": "Talguitart Festival — musique et art en plein air dans l'Atlas marocain."
   },
   {
     "cat": "music",
@@ -379,7 +379,7 @@
       }
     ],
     "instagram": "",
-    "description": "Orchestre Philharmonique du Maroc \u2014 portraits et reportage de la sc\u00e8ne classique marocaine."
+    "description": "Orchestre Philharmonique du Maroc — portraits et reportage de la scène classique marocaine."
   },
   {
     "cat": "hospitality",
@@ -705,7 +705,7 @@
       }
     ],
     "instagram": "",
-    "description": "Shooting produit et ambiance pour 48 Collagen, marque de cosm\u00e9tiques premium."
+    "description": "Shooting produit et ambiance pour 48 Collagen, marque de cosmétiques premium."
   },
   {
     "cat": "hospitality",
@@ -731,7 +731,7 @@
       }
     ],
     "instagram": "",
-    "description": "Amouag Taghazout \u2014 mise en valeur architecturale et lifestyle de ce complexe h\u00f4telier."
+    "description": "Amouag Taghazout — mise en valeur architecturale et lifestyle de ce complexe hôtelier."
   },
   {
     "cat": "hospitality",
@@ -805,7 +805,7 @@
       }
     ],
     "instagram": "",
-    "description": "Coffee Shop NOUR \u2014 photographie d'ambiance pour ce caf\u00e9 design au coeur du Maroc."
+    "description": "Coffee Shop NOUR — photographie d'ambiance pour ce café design au coeur du Maroc."
   },
   {
     "cat": "hospitality",
@@ -885,7 +885,7 @@
       }
     ],
     "instagram": "",
-    "description": "Tamraght Hostel \u2014 reportage lifestyle et architecture pour cet h\u00e9bergement surf sur la c\u00f4te atlantique."
+    "description": "Tamraght Hostel — reportage lifestyle et architecture pour cet hébergement surf sur la côte atlantique."
   },
   {
     "cat": "sports",
@@ -979,11 +979,11 @@
       }
     ],
     "instagram": "",
-    "description": "CHECKMAT Jiu Jitsu Club \u2014 reportage sportif et portraits des athl\u00e8tes."
+    "description": "CHECKMAT Jiu Jitsu Club — reportage sportif et portraits des athlètes."
   },
   {
     "cat": "sports",
-    "title": "Fe\u0301de\u0301ration Royale Marocaine de Golf HASSAN II TROPHY",
+    "title": "Fédération Royale Marocaine de Golf HASSAN II TROPHY",
     "main": "sports-003.jpg",
     "originalMain": "IMG_6507 2.jpeg",
     "others": [
@@ -1007,7 +1007,7 @@
       "_DSC4106.jpeg",
       "_DSC8799.jpeg"
     ],
-    "folder": "Fe\u0301de\u0301ration Royale Marocaine de Golf HASSAN II TROPHY ",
+    "folder": "Fédération Royale Marocaine de Golf HASSAN II TROPHY ",
     "slug": "federation-royale-marocaine-de-golf-hassan-ii-trophy",
     "secondaryPhotos": [
       {
@@ -1106,12 +1106,12 @@
         "h": 798
       }
     ],
-    "instagram": "",
-    "description": "Troph\u00e9e Hassan II \u2014 couverture officielle du tournoi de golf de la F\u00e9d\u00e9ration Royale Marocaine."
+    "instagram": "frmgolf",
+    "description": "Trophée Hassan II — couverture officielle du tournoi de golf de la Fédération Royale Marocaine."
   },
   {
     "cat": "sports",
-    "title": "Fe\u0301de\u0301ration Royale Marocaine des Sports\nE\u0301questres. Morocco royal tour",
+    "title": "Fédération Royale Marocaine des Sports\nÉquestres. Morocco royal tour",
     "main": "sports-004.jpg",
     "originalMain": "First 1.jpeg",
     "others": [
@@ -1142,7 +1142,7 @@
       "IMG_2704.jpeg",
       "IMG_2775.jpeg"
     ],
-    "folder": "Fe\u0301de\u0301ration Royale Marocaine des Sports\nE\u0301questres. Morocco royal tour ",
+    "folder": "Fédération Royale Marocaine des Sports\nÉquestres. Morocco royal tour ",
     "slug": "federation-royale-marocaine-des-sports-equestres-morocco-royal-tour",
     "secondaryPhotos": [
       {
@@ -1276,8 +1276,8 @@
         "h": 1000
       }
     ],
-    "instagram": "",
-    "description": "Morocco Royal Tour \u2014 reportage \u00e9questre pour la F\u00e9d\u00e9ration Royale Marocaine des Sports \u00c9questres."
+    "instagram": "frmse_ma",
+    "description": "Morocco Royal Tour — reportage équestre pour la Fédération Royale Marocaine des Sports Équestres."
   },
   {
     "cat": "sports",
@@ -1434,8 +1434,8 @@
         "h": 1500
       }
     ],
-    "instagram": "",
-    "description": "Ironman Morocco \u2014 couverture de la comp\u00e9tition de triathlon la plus exigeante du pays."
+    "instagram": "ironmanmorocco",
+    "description": "Ironman Morocco — couverture de la compétition de triathlon la plus exigeante du pays."
   },
   {
     "cat": "sports",
@@ -1790,8 +1790,8 @@
         "h": 1000
       }
     ],
-    "instagram": "",
-    "description": "Couverture photographique du Rally Africa Eco Race, une aventure hors-piste \u00e0 travers les paysages du Maroc."
+    "instagram": "africaecorace",
+    "description": "Couverture photographique du Rally Africa Eco Race, une aventure hors-piste à travers les paysages du Maroc."
   },
   {
     "cat": "sports",
@@ -1937,6 +1937,6 @@
       }
     ],
     "instagram": "",
-    "description": "Surf WSL Morocco \u2014 capturer la puissance des vagues et l'\u00e9nergie des comp\u00e9titeurs sur le circuit mondial."
+    "description": "Surf WSL Morocco — capturer la puissance des vagues et l'énergie des compétiteurs sur le circuit mondial."
   }
 ]
