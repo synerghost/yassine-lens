@@ -21,13 +21,23 @@ const FEATURED_SLUGS = [
   "federation-royale-marocaine-des-sports-equestres-morocco-royal-tour",
 ];
 
-/** Keep featured photos first, then mix categories for the rest. */
+/**
+ * Homepage order: featured first, then SPORTS (the highlighted category) so it
+ * dominates the top of the page, then the other categories interleaved.
+ */
 export function interleave(photos: Photo[]): Photo[] {
   const featured = FEATURED_SLUGS.map((s) => photos.find((p) => p.slug === s)).filter(Boolean) as Photo[];
-  const rest = photos.filter((p) => !p.slug || !FEATURED_SLUGS.includes(p.slug));
+  const featuredSet = new Set(featured.map((p) => p.slug));
+  const rest = photos.filter((p) => !p.slug || !featuredSet.has(p.slug));
 
-  const buckets = CATEGORIES.map((c) => rest.filter((p) => p.cat === c));
-  const loose = rest.filter((p) => !CATEGORIES.includes(p.cat as Category));
+  // Sports come out first (more prominent on the home page).
+  const sports = rest.filter((p) => p.cat === "sports");
+
+  // Remaining categories interleaved round-robin so they alternate.
+  const others = rest.filter((p) => p.cat !== "sports");
+  const otherCats = CATEGORIES.filter((c) => c !== "sports");
+  const buckets = otherCats.map((c) => others.filter((p) => p.cat === c));
+  const loose = others.filter((p) => !CATEGORIES.includes(p.cat as Category));
   const mixed: Photo[] = [];
   let added = true;
   for (let i = 0; added; i++) {
@@ -36,7 +46,7 @@ export function interleave(photos: Photo[]): Photo[] {
       if (b[i]) { mixed.push(b[i]); added = true; }
     }
   }
-  return [...featured, ...mixed, ...loose];
+  return [...featured, ...sports, ...mixed, ...loose];
 }
 
 /** Raw stored list (admin order preserved). Blob if configured, else bundled. */
@@ -66,24 +76,29 @@ export async function getRawGallery(): Promise<Photo[]> {
  * The card cover for each project is driven by the project's `main` image
  * whenever it has been changed in the admin (i.e. it points to an uploaded
  * Blob URL). Untouched projects keep their original gallery photo, so there
- * is no regression. The gallery photo's stored w/h are kept for the masonry
- * layout — the new cover is simply object-fit: cover cropped into that slot.
+ * is no regression. The cover's own dimensions are used so its real format
+ * (portrait/landscape) is respected in the mosaic.
  */
 export async function getGallery(): Promise<Photo[]> {
   const raw = await getRawGallery();
   try {
     const { getProjects } = await import("./projects");
     const projects = await getProjects();
-    const mainBySlug = new Map<string, string>();
+    const mainBySlug = new Map<string, { file: string; w?: number; h?: number }>();
     for (const p of projects) {
       // Only override when the admin uploaded a new cover (full Blob/HTTP URL).
       if (p.slug && typeof p.main === "string" && p.main.startsWith("http")) {
-        mainBySlug.set(p.slug, p.main);
+        mainBySlug.set(p.slug, { file: p.main, w: p.mainW, h: p.mainH });
       }
     }
-    // 1) Override existing cards' cover with the project's uploaded main image.
+    // 1) Override existing cards' cover with the project's uploaded main image,
+    //    using the cover's own dimensions so its real format (portrait/landscape)
+    //    is respected in the mosaic.
     const merged = mainBySlug.size
-      ? raw.map((ph) => (ph.slug && mainBySlug.has(ph.slug) ? { ...ph, file: mainBySlug.get(ph.slug)! } : ph))
+      ? raw.map((ph) => {
+          const m = ph.slug ? mainBySlug.get(ph.slug) : undefined;
+          return m ? { ...ph, file: m.file, w: m.w || ph.w, h: m.h || ph.h } : ph;
+        })
       : raw.slice();
 
     // 2) Add cards for newly created projects that have a cover but no gallery

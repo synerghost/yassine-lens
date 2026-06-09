@@ -108,7 +108,7 @@ export default function ProjectExperience({
             {project.title}
           </h1>
         </div>
-        {project.description && (
+        {(project.description || project.instagram) && (
           <p
             style={{
               fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
@@ -127,7 +127,7 @@ export default function ProjectExperience({
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  marginLeft: 10,
+                  marginLeft: project.description ? 10 : 0,
                   color: "rgba(255,255,255,0.45)",
                   textDecoration: "none",
                   pointerEvents: "auto",
