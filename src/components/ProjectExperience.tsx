@@ -21,6 +21,22 @@ type Project = {
 // Photos in project pages have no individual hover caps — pass as bare photos
 type ProjectPhoto = Photo & { projectTitle?: string };
 
+/**
+ * Extract a clean Instagram username from whatever the admin typed:
+ * "@user", "user", "instagram.com/user", "https://www.instagram.com/user/?hl=fr"
+ * all resolve to "user". Used to build a correct profile link and to show only
+ * "@user" in the UI (never a raw URL).
+ */
+function igHandle(raw?: string): string {
+  let s = (raw || "").trim();
+  if (!s) return "";
+  s = s.replace(/^https?:\/\//i, "").replace(/^www\./i, "");
+  s = s.replace(/.*instagram\.com\//i, ""); // drop any instagram.com/ prefix
+  s = s.replace(/[/?#].*$/, "");            // drop trailing path / query / hash
+  s = s.replace(/^@+/, "");                 // drop leading @
+  return s.trim();
+}
+
 export default function ProjectExperience({
   project,
   photos,
@@ -124,9 +140,9 @@ export default function ProjectExperience({
             {project.description}
           </p>
         )}
-        {project.instagram && (
+        {igHandle(project.instagram) && (
           <a
-            href={`https://www.instagram.com/${project.instagram.replace("@", "")}`}
+            href={`https://www.instagram.com/${igHandle(project.instagram)}`}
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="Open"
@@ -174,7 +190,7 @@ export default function ProjectExperience({
                 letterSpacing: "0.02em",
               }}
             >
-              {project.instagram.startsWith("@") ? project.instagram : `@${project.instagram}`}
+              @{igHandle(project.instagram)}
             </span>
           </a>
         )}
