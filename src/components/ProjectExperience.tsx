@@ -108,37 +108,75 @@ export default function ProjectExperience({
             {project.title}
           </h1>
         </div>
-        {(project.description || project.instagram) && (
+        {project.description && (
           <p
             style={{
               fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
-              fontSize: 11,
-              fontWeight: 300,
-              lineHeight: 1.7,
-              color: "rgba(255,255,255,0.38)",
-              marginTop: 5,
-              maxWidth: 500,
+              fontSize: 12.5,
+              fontWeight: 400,
+              lineHeight: 1.65,
+              color: "rgba(255,255,255,0.82)",
+              marginTop: 8,
+              maxWidth: 540,
+              textShadow: "0 1px 12px rgba(0,0,0,0.55)",
             }}
           >
             {project.description}
-            {project.instagram && (
-              <a
-                href={`https://www.instagram.com/${project.instagram.replace("@", "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  marginLeft: project.description ? 10 : 0,
-                  color: "rgba(255,255,255,0.45)",
-                  textDecoration: "none",
-                  pointerEvents: "auto",
-                  borderBottom: "1px solid rgba(255,255,255,0.2)",
-                  paddingBottom: 1,
-                }}
-              >
-                {project.instagram.startsWith("@") ? project.instagram : `@${project.instagram}`}
-              </a>
-            )}
           </p>
+        )}
+        {project.instagram && (
+          <a
+            href={`https://www.instagram.com/${project.instagram.replace("@", "")}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-cursor="Open"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 9,
+              marginTop: 12,
+              padding: "7px 14px 7px 8px",
+              borderRadius: 999,
+              pointerEvents: "auto",
+              textDecoration: "none",
+              color: "rgba(255,255,255,0.92)",
+              background: "rgba(255,255,255,0.10)",
+              border: "1px solid rgba(255,255,255,0.22)",
+              backdropFilter: "blur(14px) saturate(1.4)",
+              WebkitBackdropFilter: "blur(14px) saturate(1.4)",
+              boxShadow: "inset 0 1px 0 rgba(255,255,255,0.2), 0 6px 20px rgba(0,0,0,0.3)",
+            }}
+          >
+            <span
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: "50%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "rgba(255,255,255,0.14)",
+                border: "1px solid rgba(255,255,255,0.25)",
+                flexShrink: 0,
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </span>
+            <span
+              style={{
+                fontFamily: "Helvetica Neue, Helvetica, Arial, sans-serif",
+                fontSize: 12,
+                fontWeight: 400,
+                letterSpacing: "0.02em",
+              }}
+            >
+              {project.instagram.startsWith("@") ? project.instagram : `@${project.instagram}`}
+            </span>
+          </a>
         )}
       </div>
 
