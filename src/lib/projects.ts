@@ -17,18 +17,24 @@ export type Project = {
 
 const PROJECTS_BLOB = "projects.json";
 
-// Instagram handles are code-managed (verified). Overlaid onto whatever is
-// loaded so the correct @handles always show, even if a Blob copy has empty or
-// outdated values. Keyed by slug; only non-empty static handles override.
-const STATIC_IG = new Map(
-  (projectsData as Project[])
-    .filter((p) => (p.instagram || "").trim())
-    .map((p) => [p.slug, (p.instagram || "").trim()]),
-);
+// Instagram handles are code-managed (verified with the client). Overlaid onto
+// whatever is loaded — by slug — so the correct @handles always show, even for
+// projects that exist only in Blob (e.g. "slalomania") or have empty values.
+const IG_BY_SLUG: Record<string, string> = {
+  "moga-festival": "mogafestival",
+  "ovul-festival": "ovul.sphere",
+  "talguitart-festival": "talguitart",
+  "ironman-morocco": "ironmanmorocco",
+  "rally-africa-eco-race": "africaecorace",
+  "federation-royale-marocaine-de-golf-hassan-ii-trophy": "frmgolf",
+  "federation-royale-marocaine-des-sports-equestres-morocco-royal-tour": "frmse_ma",
+  "amouag-taghazout": "fairmonttaghazoutbayresort",
+  "slalomania": "slalo_mania",
+};
 
 function applyStaticInstagram(projects: Project[]): Project[] {
   return projects.map((p) => {
-    const ig = STATIC_IG.get(p.slug);
+    const ig = IG_BY_SLUG[p.slug];
     return ig ? { ...p, instagram: ig } : p;
   });
 }
