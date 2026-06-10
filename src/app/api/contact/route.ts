@@ -18,7 +18,7 @@ const esc = (s: unknown) =>
 export async function POST(req: Request): Promise<NextResponse> {
   const apiKey = process.env.RESEND_API_KEY;
   const to = process.env.CONTACT_TO;
-  const from = process.env.CONTACT_FROM || "Yassine's Lens <onboarding@resend.dev>";
+  const from = process.env.CONTACT_FROM || "Yassine's Lens <noreply@yassine-lens.com>";
 
   if (!apiKey || !to) {
     return NextResponse.json(
