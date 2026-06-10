@@ -14,16 +14,29 @@ const services = [
 
 export default function InfoOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({ name: "", email: "", service: "", date: "", message: "" });
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState("");
+  const [form, setForm] = useState({ name: "", email: "", service: "", date: "", message: "", company: "" });
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Booking — ${form.service || "Photography"}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\nService: ${form.service}\nDate: ${form.date}\n\n${form.message}`
-    );
-    window.open(`mailto:contact@yassine-lens.com?subject=${subject}&body=${body}`);
-    setSent(true);
+    setError("");
+    setSending(true);
+    try {
+      const r = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(d.error || "Échec de l'envoi. Réessayez.");
+      setSent(true);
+      setForm({ name: "", email: "", service: "", date: "", message: "", company: "" });
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -97,7 +110,7 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
             {sent ? (
               <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
                 <span className="font-serif" style={{ fontSize: 36, fontStyle: "italic" }}>Thank you.</span>
-                <p style={{ fontSize: 14, color: "var(--muted)" }}>Your request opened in your mail app.</p>
+                <p style={{ fontSize: 14, color: "var(--muted)" }}>Your request has been sent — Yassine will get back to you shortly.</p>
                 <button onClick={() => setSent(false)} className="btn" style={{ alignSelf: "flex-start", marginTop: 8 }}>Send another</button>
               </div>
             ) : (
@@ -117,7 +130,21 @@ export default function InfoOverlay({ open, onClose }: { open: boolean; onClose:
                 </select>
                 <input placeholder="Event date / timeframe" value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
                 <textarea placeholder="Tell me about your event…" rows={4} required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} style={{ resize: "none" }} />
-                <button type="submit" className="btn" style={{ alignSelf: "flex-start" }} data-cursor="Send">Send request</button>
+                {/* Honeypot: hidden from users, catches bots */}
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.company}
+                  onChange={(e) => setForm({ ...form, company: e.target.value })}
+                  style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
+                  aria-hidden="true"
+                />
+                {error && <p style={{ fontSize: 13, color: "#ff8080" }}>{error}</p>}
+                <button type="submit" className="btn" style={{ alignSelf: "flex-start", opacity: sending ? 0.6 : 1 }} data-cursor="Send" disabled={sending}>
+                  {sending ? "Sending…" : "Send request"}
+                </button>
               </form>
             )}
           </div>
