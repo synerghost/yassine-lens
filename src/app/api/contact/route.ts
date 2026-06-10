@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import nodemailer from "nodemailer";
+
+export const runtime = "nodejs";
 
 // Escape user input so it can't inject HTML into the email body.
 const esc = (s: unknown) =>
@@ -7,22 +10,27 @@ const esc = (s: unknown) =>
   );
 
 /**
- * Contact form -> email via the Resend REST API (no SDK dependency).
+ * Contact form -> email via ImprovMX SMTP (premium).
  *
  * Env vars (set in Vercel):
- *  - RESEND_API_KEY : key from the existing Resend account (same as bsstd.com).
- *  - CONTACT_TO     : where to receive requests (e.g. the client's Gmail).
- *  - CONTACT_FROM   : a verified sender, e.g. "Yassine's Lens <noreply@bsstd.com>"
- *                     or an address on a verified yassine-lens.com domain.
+ *  - SMTP_HOST  : default "smtp.improvmx.com"
+ *  - SMTP_PORT  : default "587" (587 = STARTTLS, 465 = SSL)
+ *  - SMTP_USER  : ImprovMX SMTP login, e.g. "contact@yassine-lens.com"
+ *  - SMTP_PASS  : ImprovMX SMTP password (from the ImprovMX dashboard)
+ *  - CONTACT_TO : where to receive requests (default the client's Gmail)
+ *  - CONTACT_FROM (optional) : display sender, default "Yassine's Lens <SMTP_USER>"
  */
 export async function POST(req: Request): Promise<NextResponse> {
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.CONTACT_TO;
-  const from = process.env.CONTACT_FROM || "Yassine's Lens <noreply@yassine-lens.com>";
+  const host = process.env.SMTP_HOST || "smtp.improvmx.com";
+  const port = Number(process.env.SMTP_PORT) || 587;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+  const to = process.env.CONTACT_TO || "Yassinezennar45@gmail.com";
+  const from = process.env.CONTACT_FROM || `Yassine's Lens <${user ?? "contact@yassine-lens.com"}>`;
 
-  if (!apiKey || !to) {
+  if (!user || !pass) {
     return NextResponse.json(
-      { error: "Service d'email non configuré (RESEND_API_KEY / CONTACT_TO manquant)." },
+      { error: "SMTP non configuré (SMTP_USER / SMTP_PASS manquant)." },
       { status: 500 },
     );
   }
@@ -60,17 +68,26 @@ export async function POST(req: Request): Promise<NextResponse> {
   `;
 
   try {
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to, subject, html, reply_to: email.trim() }),
+    const transporter = nodemailer.createTransport({
+      host,
+      port,
+      secure: port === 465, // 465 = implicit TLS; 587 = STARTTLS (secure:false)
+      auth: { user, pass },
     });
-    if (!r.ok) {
-      const err = await r.json().catch(() => ({}));
-      return NextResponse.json({ error: err?.message || "Échec de l'envoi." }, { status: 502 });
-    }
+
+    await transporter.sendMail({
+      from,
+      to,
+      replyTo: email.trim(),
+      subject,
+      html,
+    });
+
     return NextResponse.json({ ok: true });
   } catch (e) {
-    return NextResponse.json({ error: (e as Error).message || "Échec de l'envoi." }, { status: 500 });
+    return NextResponse.json(
+      { error: (e as Error).message || "Échec de l'envoi." },
+      { status: 502 },
+    );
   }
 }
